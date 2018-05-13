@@ -3,4 +3,9 @@
     <string name="second">This is second Activity</string>
     <string name="BtnAddLesson">+</string>
     <string name="main_CB">Check Box</string>
+    <string name="Create_class">Создать класс</string>
+    <string name="Found_class">Найти класс</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="settings">Settings</string>
 </resources>

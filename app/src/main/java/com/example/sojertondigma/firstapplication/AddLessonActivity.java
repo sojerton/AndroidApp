@@ -1,24 +1,34 @@
 package com.example.sojertondigma.firstapplication;
 
 import android.content.Intent;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageButton;
 
 public class AddLessonActivity extends AppCompatActivity {
 
     final String TAG = "lifecycle";
+    ImageButton AddLessonCloseBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_lesson);
 
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setHomeButtonEnabled(true);
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        AddLessonCloseBtn = findViewById(R.id.addLessonCloseBtn);
+        AddLessonCloseBtn.setEnabled(true);
+        AddLessonCloseBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+        //ActionBar actionBar = getSupportActionBar();
+        //actionBar.setHomeButtonEnabled(true);
+        // actionBar.setDisplayHomeAsUpEnabled(true);
 
         Log.d(TAG, "AddLessonActivity onCreate");
     }
@@ -29,9 +39,17 @@ public class AddLessonActivity extends AppCompatActivity {
             case android.R.id.home:
                 startActivity(new Intent(this, MainActivity.class));
                 return true;
+            case R.id.addLessonCloseBtn:
+                startActivity(new Intent(this, MainActivity.class));
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
     }
 
     @Override

@@ -4,20 +4,27 @@ import android.app.ActionBar;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.nfc.Tag;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
-import android.widget.Toolbar;
+import android.support.v7.widget.Toolbar;
 
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener{
 
     final String TAG = "lifecycle";
     Button myBtn;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,27 +34,53 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //TextView myTextView = findViewById(R.id.text_veiw);
         //myTextView.setText("Hello");
 
+        toolbar = findViewById(R.id.bar_main_toolbar);
+        setSupportActionBar(toolbar);
+        setTitle("Расписание");
+
         myBtn = findViewById(R.id.btnAddLesson);
         myBtn.setEnabled(true);
-
         myBtn.setOnClickListener(this);
 
-        CheckBox myChb = findViewById(R.id.chb);
-        myChb.setChecked(true);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
 
-        setTitle("Расписание");
-        //REQUIRES API 21 LEVEL
-        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        //getSupportActionBar().setDisplayShowHomeEnabled(true);
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
 
-
-        //ActionBar bar = getActionBar();
-        //bar.setBackgroundDrawable(new ColorDrawable(R.color.red));
 
         Log.d(TAG, "MainActivity onCreate");
     }
+
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)){
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        int id = item.getItemId();
+        if(id == R.id.action_settings){
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
 
     @Override
     protected void onRestart() {
@@ -92,4 +125,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         startActivity(intent);
     }
 
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.create_class){
+
+        }else if (id == R.id.found_class){
+
+        }
+
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
 }
