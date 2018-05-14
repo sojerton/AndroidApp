@@ -1,6 +1,5 @@
 package com.example.sojertondigma.firstapplication;
 
-import android.app.ActionBar;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.nfc.Tag;

@@ -3,10 +3,14 @@ package com.example.sojertondigma.firstapplication;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageButton;
+
+import com.santalu.maskedittext.MaskEditText;
 
 public class AddLessonActivity extends AppCompatActivity {
 
@@ -26,9 +30,7 @@ public class AddLessonActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
-        //ActionBar actionBar = getSupportActionBar();
-        //actionBar.setHomeButtonEnabled(true);
-        // actionBar.setDisplayHomeAsUpEnabled(true);
+
 
         Log.d(TAG, "AddLessonActivity onCreate");
     }

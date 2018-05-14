@@ -1,21 +1,189 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorWhite"
-    tools:context=".AddLessonActivity">
+    android:background="@drawable/gradient_add_lesson_activity"
+    tools:context=".AddLessonActivity"
+    tools:layout_editor_absoluteY="25dp">
 
     <ImageButton
         android:id="@+id/addLessonCloseBtn"
-        android:layout_width="35dp"
-        android:layout_height="40dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
+        android:layout_marginBottom="230dp"
+        android:background="@color/accent"
         android:contentDescription="back"
+        android:longClickable="true"
+        app:layout_constraintBottom_toTopOf="@+id/textView5"
+        app:layout_constraintEnd_toStartOf="@+id/editTextSubject"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="?android:attr/actionModeCloseDrawable" />
 
+    <Button
+        android:id="@+id/addedBtn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="63dp"
+        android:layout_marginEnd="14dp"
+        android:layout_marginStart="14dp"
+        android:background="@color/accent"
+        android:longClickable="true"
+        android:text="Добавить"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/editTextTimeTil"
+        app:layout_constraintStart_toStartOf="@+id/textView4" />
 
+    <EditText
+        android:id="@+id/editTextPrepod"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView3"
+        android:layout_marginBottom="19dp"
+        android:layout_toEndOf="@+id/addLessonCloseBtn"
+        android:ems="10"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/editText5"
+        app:layout_constraintStart_toStartOf="@+id/editTextSubject"
+        app:layout_constraintTop_toBottomOf="@+id/editTextSubject" />
 
-</RelativeLayout>
+    <EditText
+        android:id="@+id/editTextSubject"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView"
+        android:layout_marginBottom="17dp"
+        android:layout_marginStart="38dp"
+        android:layout_toEndOf="@+id/addLessonCloseBtn"
+        android:ems="10"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/editTextPrepod"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editTextSubject"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="44dp"
+        android:layout_toEndOf="@+id/addLessonCloseBtn"
+        android:text="Преподаватель"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/editTextSubject"
+        app:layout_constraintTop_toTopOf="@+id/editTextSubject" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="1dp"
+        android:layout_marginStart="10dp"
+        android:layout_toEndOf="@+id/addLessonCloseBtn"
+        android:text="Кабинет"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/editText5"
+        app:layout_constraintStart_toStartOf="@+id/editTextPrepod" />
+
+    <com.santalu.maskedittext.MaskEditText
+        android:id="@+id/editTextTimeFrom"
+        android:layout_width="82dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="2dp"
+        android:layout_marginStart="1dp"
+        android:ems="10"
+        android:inputType="time"
+        app:layout_constraintBaseline_toBaselineOf="@+id/textView5"
+        app:layout_constraintEnd_toStartOf="@+id/textView7"
+        app:layout_constraintStart_toEndOf="@+id/textView5"
+        app:met_mask="##:##" />
+
+    <com.santalu.maskedittext.MaskEditText
+        android:id="@+id/editTextTimeTil"
+        android:layout_width="83dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="69dp"
+        android:layout_marginStart="1dp"
+        android:ems="10"
+        android:inputType="time"
+        app:layout_constraintBaseline_toBaselineOf="@+id/textView7"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView7"
+        app:met_mask="##:##" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="7dp"
+        android:layout_marginStart="10dp"
+        android:layout_toEndOf="@+id/addLessonCloseBtn"
+        android:text="Время"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/editTextTimeFrom"
+        app:layout_constraintStart_toStartOf="@+id/editText5" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/addLessonCloseBtn"
+        android:layout_marginBottom="3dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="48dp"
+        android:layout_toEndOf="@+id/addLessonCloseBtn"
+        android:text="Предмет"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/editTextSubject"
+        app:layout_constraintStart_toStartOf="@+id/editTextSubject"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/editText5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView4"
+        android:layout_marginBottom="27dp"
+        android:layout_toEndOf="@+id/addLessonCloseBtn"
+        android:ems="10"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/textView5"
+        app:layout_constraintStart_toStartOf="@+id/editTextPrepod"
+        app:layout_constraintTop_toBottomOf="@+id/editTextPrepod" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginBottom="204dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginStart="38dp"
+        android:text="С"
+        android:textSize="22sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/editTextTimeFrom"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editText5" />
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="1dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="4dp"
+        android:text="До"
+        android:textSize="22sp"
+        app:layout_constraintEnd_toStartOf="@+id/editTextTimeTil"
+        app:layout_constraintStart_toEndOf="@+id/editTextTimeFrom"
+        app:layout_constraintTop_toTopOf="@+id/editTextTimeFrom" />
+
+</android.support.constraint.ConstraintLayout>
