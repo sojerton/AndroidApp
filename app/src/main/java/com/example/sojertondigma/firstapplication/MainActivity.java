@@ -9,11 +9,14 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.support.v7.widget.Toolbar;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener{
@@ -26,9 +29,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        //TextView myTextView = findViewById(R.id.text_veiw);
-        //myTextView.setText("Hello");
 
         toolbar = findViewById(R.id.bar_main_toolbar);
         setSupportActionBar(toolbar);
@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
 
 
         Log.d(TAG, "MainActivity onCreate");
@@ -81,6 +82,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onRestart() {
         super.onRestart();
+
+
         Log.d(TAG, "MainActivity onRestart");
     }
 
@@ -88,12 +91,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onStart() {
         super.onStart();
+
+        LinearLayout linLayoutV= (LinearLayout) findViewById(R.id.linLayoutV);
+        LayoutInflater ltInflater = getLayoutInflater();
+        View item = ltInflater.inflate(R.layout.display_schedule_view, linLayoutV, false);
+        Intent intent = getIntent();
+        String message = intent.getStringExtra(AddLessonActivity.EXTRA_MESSAGE);
+        TextView subject = (TextView) item.findViewById(R.id.subject);
+        subject.setText(message);
+
+        item.getLayoutParams().width = LinearLayout.LayoutParams.MATCH_PARENT;
+        linLayoutV.addView(item);
+
+
         Log.d(TAG, "MainActivity onStart");
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+
+
         Log.d(TAG, "MainActivity onResume");
     }
 
@@ -106,6 +124,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onStop() {
         super.onStop();
+
+
         Log.d(TAG, "MainActivity onStop");
     }
 

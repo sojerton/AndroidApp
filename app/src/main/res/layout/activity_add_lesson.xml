@@ -34,6 +34,7 @@
         android:layout_marginEnd="14dp"
         android:layout_marginStart="14dp"
         android:background="@drawable/button_added"
+        android:onClick="sendMessage"
         android:text="Добавить"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -49,7 +50,7 @@
         android:layout_toEndOf="@+id/addLessonCloseBtn"
         android:ems="10"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/editText5"
+        app:layout_constraintBottom_toTopOf="@+id/editTextRoom"
         app:layout_constraintStart_toStartOf="@+id/editTextSubject"
         app:layout_constraintTop_toBottomOf="@+id/editTextSubject" />
 
@@ -89,7 +90,7 @@
         android:layout_toEndOf="@+id/addLessonCloseBtn"
         android:text="Кабинет"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/editText5"
+        app:layout_constraintBottom_toTopOf="@+id/editTextRoom"
         app:layout_constraintStart_toStartOf="@+id/editTextPrepod" />
 
     <com.santalu.maskedittext.MaskEditText
@@ -128,7 +129,7 @@
         android:text="Время"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/editTextTimeFrom"
-        app:layout_constraintStart_toStartOf="@+id/editText5" />
+        app:layout_constraintStart_toStartOf="@+id/editTextRoom" />
 
     <TextView
         android:id="@+id/textView"
@@ -146,7 +147,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editText5"
+        android:id="@+id/editTextRoom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/textView4"
@@ -170,7 +171,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/editTextTimeFrom"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText5" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextRoom" />
 
     <TextView
         android:id="@+id/textView7"
