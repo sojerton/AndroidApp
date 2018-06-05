@@ -12,9 +12,8 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 
-public class AddLessonActivity extends AppCompatActivity {
+public class AddLessonActivity extends AppCompatActivity implements View.OnClickListener {
 
-    public static final String EXTRA_MESSAGE = "com.example.sojertondigma.firstapplication.MESSAGE";
     final String TAG = "lifecycle";
     private ImageButton mAddLessonCloseBtn;
     private Button mAddedBtn;
@@ -33,32 +32,35 @@ public class AddLessonActivity extends AppCompatActivity {
             }
         });
 
-       /* mAddedBtn = findViewById(R.id.addedBtn);
-        mAddedBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //TextView addTimeFrom = (TextView) mTimeFrom.getText();
-                //mSubject = findViewById(R.id.editTextSubject);
-                //TextView Subject = (TextView) mSubject.getText();
+        mAddedBtn = findViewById(R.id.addedBtn);
+        mAddedBtn.setOnClickListener(this);
 
-
-                finish();
-            }
-        });*/
-
+        EditText editTextSubject = (EditText) findViewById(R.id.editTextSubject);
+        editTextSubject.requestFocus();
 
         Log.d(TAG, "AddLessonActivity onCreate");
     }
 
-    public void sendMessage(View view){
+    @Override
+    public void onClick(View v) {
         Intent intent = new Intent(this, MainActivity.class);
-
-        EditText editText = (EditText) findViewById(R.id.editTextSubject);
-        String message = editText.getText().toString();
-        intent.putExtra(EXTRA_MESSAGE, message);
-
-        startActivity(intent);
+        EditText editTextSubject = (EditText) findViewById(R.id.editTextSubject);
+        intent.putExtra("subject", editTextSubject.getText().toString());
+        EditText editTextPrepod = (EditText) findViewById(R.id.editTextPrepod);
+        intent.putExtra("prepod", editTextPrepod.getText().toString());
+        EditText editTextRoom = (EditText) findViewById(R.id.editTextRoom);
+        intent.putExtra("room", editTextRoom.getText().toString());
+        EditText editTextTimeFrom = (EditText) findViewById(R.id.editTextTimeFrom);
+        intent.putExtra("timeFrom", editTextTimeFrom.getText().toString());
+        EditText editTextTimeTil = (EditText) findViewById(R.id.editTextTimeTill);
+        intent.putExtra("timeTill", editTextTimeTil.getText().toString());
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        setResult(RESULT_OK, intent);
         finish();
+    }
+
+    public void sendMessage(View view){
+
     }
 
     @Override

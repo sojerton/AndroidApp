@@ -2,6 +2,7 @@ package com.example.sojertondigma.firstapplication;
 
 import android.content.Intent;
 import android.nfc.Tag;
+import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -24,6 +25,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     final String TAG = "lifecycle";
     Button myBtn;
     private Toolbar toolbar;
+    TextView subject, prepod, room, timeFrom, timeTill;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,8 +49,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-
-
         Log.d(TAG, "MainActivity onCreate");
     }
 
@@ -60,6 +60,38 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } else {
             super.onBackPressed();
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        if (intent == null) {return;}
+        LinearLayout linLayoutV = (LinearLayout) findViewById(R.id.linLayoutV);
+        LayoutInflater ltInflater = getLayoutInflater();
+        View item = ltInflater.inflate(R.layout.display_schedule_view, linLayoutV, false);
+        //Intent intent = getIntent();
+
+        String sSubject = intent.getStringExtra("subject");
+        subject = (TextView) item.findViewById(R.id.subject);
+        subject.setText(sSubject);
+
+        String sPrepod = intent.getStringExtra("prepod");
+        prepod = (TextView) item.findViewById(R.id.prepod);
+        prepod.setText(sPrepod);
+
+        String sRoom = intent.getStringExtra("room");
+        room = (TextView) item.findViewById(R.id.room);
+        room.setText(sRoom);
+
+        String sTimeFrom = intent.getStringExtra("timeFrom");
+        timeFrom = (TextView) item.findViewById(R.id.timeFrom);
+        timeFrom.setText(sTimeFrom);
+
+        String sTimeTill = intent.getStringExtra("timeTill");
+        timeTill = (TextView) item.findViewById(R.id.timeTill);
+        timeTill.setText(sTimeTill);
+
+        item.getLayoutParams().width = LinearLayout.LayoutParams.MATCH_PARENT;
+        linLayoutV.addView(item);
     }
 
     @Override
@@ -83,7 +115,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onRestart() {
         super.onRestart();
 
-
         Log.d(TAG, "MainActivity onRestart");
     }
 
@@ -91,18 +122,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onStart() {
         super.onStart();
-
-        LinearLayout linLayoutV= (LinearLayout) findViewById(R.id.linLayoutV);
-        LayoutInflater ltInflater = getLayoutInflater();
-        View item = ltInflater.inflate(R.layout.display_schedule_view, linLayoutV, false);
-        Intent intent = getIntent();
-        String message = intent.getStringExtra(AddLessonActivity.EXTRA_MESSAGE);
-        TextView subject = (TextView) item.findViewById(R.id.subject);
-        subject.setText(message);
-
-        item.getLayoutParams().width = LinearLayout.LayoutParams.MATCH_PARENT;
-        linLayoutV.addView(item);
-
 
         Log.d(TAG, "MainActivity onStart");
     }
@@ -138,7 +157,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         Intent intent = new Intent(this, AddLessonActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent, 1);
     }
 
     @SuppressWarnings("StatementWithEmptyBody")

@@ -10,12 +10,12 @@
     tools:showIn="@layout/bar_main"
     android:orientation="vertical">
 
-    <com.example.sojertondigma.firstapplication.ScheduleDisplay
+    <!--com.example.sojertondigma.firstapplication.ScheduleDisplay
         android:id="@+id/display_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center"/>
+        android:layout_height="2dp"
+        android:gravity="center"
+        android:orientation="horizontal" -->
 
     <ScrollView
         android:id="@+id/scroll"

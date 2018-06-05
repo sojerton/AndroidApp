@@ -26,19 +26,18 @@
 
     <Button
         android:id="@+id/addedBtn"
-        android:layout_width="0dp"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="63dp"
+        android:layout_marginBottom="100dp"
         android:layout_marginEnd="14dp"
         android:layout_marginStart="14dp"
         android:background="@drawable/button_added"
-        android:onClick="sendMessage"
         android:text="Добавить"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/editTextTimeTil"
+        app:layout_constraintEnd_toEndOf="@+id/editTextTimeTill"
         app:layout_constraintStart_toStartOf="@+id/textView4" />
 
     <EditText
@@ -49,10 +48,15 @@
         android:layout_marginBottom="19dp"
         android:layout_toEndOf="@+id/addLessonCloseBtn"
         android:ems="10"
+        android:imeOptions="actionNext"
         android:inputType="textPersonName"
+        android:nextFocusForward="@+id/editTextRoom"
+        android:singleLine="true"
+        android:maxLength="20"
         app:layout_constraintBottom_toTopOf="@+id/editTextRoom"
         app:layout_constraintStart_toStartOf="@+id/editTextSubject"
         app:layout_constraintTop_toBottomOf="@+id/editTextSubject" />
+
 
     <EditText
         android:id="@+id/editTextSubject"
@@ -63,7 +67,11 @@
         android:layout_marginStart="38dp"
         android:layout_toEndOf="@+id/addLessonCloseBtn"
         android:ems="10"
+        android:imeOptions="actionNext"
         android:inputType="textPersonName"
+        android:nextFocusForward="@+id/editTextPrepod"
+        android:singleLine="true"
+        android:maxLength="20"
         app:layout_constraintBottom_toTopOf="@+id/editTextPrepod"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
@@ -100,14 +108,17 @@
         android:layout_marginEnd="2dp"
         android:layout_marginStart="1dp"
         android:ems="10"
+        android:imeOptions="actionNext"
         android:inputType="time"
+        android:nextFocusForward="@+id/editTextTimeTill"
+        android:singleLine="true"
         app:layout_constraintBaseline_toBaselineOf="@+id/textView5"
         app:layout_constraintEnd_toStartOf="@+id/textView7"
         app:layout_constraintStart_toEndOf="@+id/textView5"
         app:met_mask="##:##" />
 
     <com.santalu.maskedittext.MaskEditText
-        android:id="@+id/editTextTimeTil"
+        android:id="@+id/editTextTimeTill"
         android:layout_width="83dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="69dp"
@@ -154,7 +165,11 @@
         android:layout_marginBottom="27dp"
         android:layout_toEndOf="@+id/addLessonCloseBtn"
         android:ems="10"
+        android:imeOptions="actionNext"
         android:inputType="textPersonName"
+        android:nextFocusForward="@+id/editTextTimeFrom"
+        android:singleLine="true"
+        android:maxLength="4"
         app:layout_constraintBottom_toTopOf="@+id/textView5"
         app:layout_constraintStart_toStartOf="@+id/editTextPrepod"
         app:layout_constraintTop_toBottomOf="@+id/editTextPrepod" />
@@ -182,7 +197,7 @@
         android:layout_marginTop="4dp"
         android:text="До"
         android:textSize="22sp"
-        app:layout_constraintEnd_toStartOf="@+id/editTextTimeTil"
+        app:layout_constraintEnd_toStartOf="@+id/editTextTimeTill"
         app:layout_constraintStart_toEndOf="@+id/editTextTimeFrom"
         app:layout_constraintTop_toTopOf="@+id/editTextTimeFrom" />
 

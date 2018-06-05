@@ -1,39 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="50dp"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="70dp"
+    android:background="@drawable/gradient_lesson"
+    android:orientation="horizontal"
     android:layout_marginTop="10dp"
-    android:orientation="horizontal">
+    tools:layout_editor_absoluteX="10dp"
+    tools:layout_editor_absoluteY="35dp">
 
     <TextView
-        android:id="@+id/timeFrom"
+        android:id="@+id/textView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="10dp" />
-
-    <TextView
-        android:id="@+id/timeTill"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toEndOf="@+id/timeFrom" />
+        android:layout_marginStart="16dp"
+        android:text="Предмет: "
+        android:textSize="14sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/subject"
+        app:layout_constraintEnd_toStartOf="@+id/subject"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/subject"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="6dp"
+        app:layout_constraintEnd_toStartOf="@+id/textView8"
+        app:layout_constraintStart_toEndOf="@+id/textView6"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="10dp"/>
+        android:text="Препод. "
+        android:textSize="14sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/prepod"
+        app:layout_constraintEnd_toStartOf="@+id/prepod"
+        app:layout_constraintStart_toEndOf="@+id/subject" />
 
     <TextView
         android:id="@+id/prepod"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView8"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView9"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toEndOf="@+id/subject"
-        android:layout_marginRight="10dp"/>
+        android:layout_marginStart="16dp"
+        android:text="Каб. "
+        android:textSize="14sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/room"
+        app:layout_constraintEnd_toStartOf="@+id/room"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/room"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="68dp"
+        android:layout_marginTop="7dp"
+        app:layout_constraintEnd_toStartOf="@+id/textView10"
+        app:layout_constraintStart_toEndOf="@+id/textView9"
+        app:layout_constraintTop_toBottomOf="@+id/textView6" />
+
+    <TextView
+        android:id="@+id/textView10"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toLeftOf="@+id/subject" />
+        android:text="Время: "
+        android:textSize="14sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/timeFrom"
+        app:layout_constraintEnd_toStartOf="@+id/timeFrom"
+        app:layout_constraintStart_toEndOf="@+id/room" />
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/timeFrom"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="7dp"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toStartOf="@+id/timeTill"
+        app:layout_constraintStart_toEndOf="@+id/textView10"
+        app:layout_constraintTop_toBottomOf="@+id/textView8" />
+
+    <TextView
+        android:id="@+id/timeTill"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="37dp"
+        android:textSize="14sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/timeFrom"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/timeFrom" />
+
+</android.support.constraint.ConstraintLayout>
