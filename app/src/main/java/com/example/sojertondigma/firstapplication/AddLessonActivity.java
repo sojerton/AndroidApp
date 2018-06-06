@@ -9,8 +9,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.TextView;
-
 
 public class AddLessonActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -57,10 +55,6 @@ public class AddLessonActivity extends AppCompatActivity implements View.OnClick
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         setResult(RESULT_OK, intent);
         finish();
-    }
-
-    public void sendMessage(View view){
-
     }
 
     @Override
@@ -118,6 +112,5 @@ public class AddLessonActivity extends AppCompatActivity implements View.OnClick
         super.onDestroy();
         Log.d(TAG, "AddLessonActivity onDestroy");
     }
-
 
 }

@@ -1,9 +1,9 @@
 package com.example.sojertondigma.firstapplication;
 
+import android.content.ContentValues;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.nfc.Tag;
-import android.support.annotation.Nullable;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -21,19 +21,24 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener{
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
 
     final String TAG = "lifecycle";
+    final String LOG_TAG = "data";
     Button myBtn;
     private Toolbar toolbar;
     TextView subject, prepod, room, timeFrom, timeTill;
-    SharedPreferences sPref;
+    DBHelper dbHelper;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+
+        loadText();
         toolbar = findViewById(R.id.bar_main_toolbar);
         setSupportActionBar(toolbar);
         setTitle("Расписание");
@@ -51,14 +56,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        loadText();
         Log.d(TAG, "MainActivity onCreate");
     }
 
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)){
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
@@ -67,7 +71,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        if (intent == null) {return;}
+        if (intent == null) {
+            return;
+        }
         LinearLayout linLayoutV = (LinearLayout) findViewById(R.id.linLayoutV);
         LayoutInflater ltInflater = getLayoutInflater();
         View item = ltInflater.inflate(R.layout.display_schedule_view, linLayoutV, false);
@@ -91,9 +97,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String sTimeTill = intent.getStringExtra("timeTill");
         timeTill = (TextView) item.findViewById(R.id.timeTill);
         timeTill.setText(sTimeTill);
-
+        saveText();
         item.getLayoutParams().width = LinearLayout.LayoutParams.MATCH_PARENT;
         linLayoutV.addView(item);
+
     }
 
     @Override
@@ -103,64 +110,81 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item){
+    public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if(id == R.id.action_settings){
+        if (id == R.id.action_settings) {
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    void saveText(){
-        if(subject!=null) {
-            sPref = getPreferences(MODE_PRIVATE);
-            SharedPreferences.Editor ed = sPref.edit();
-            ed.putString("SUBJECT", subject.getText().toString());
-            ed.putString("PREPOD", prepod.getText().toString());
-            ed.putString("ROOM", room.getText().toString());
-            ed.putString("TIME_FROM", timeFrom.getText().toString());
-            ed.putString("TIME_TILL", timeTill.getText().toString());
-            ed.commit();
+    void saveText() {
+        if (subject != null) {
+            Log.d(LOG_TAG, "--- Insert in mytable: ---");
+            dbHelper = new DBHelper(this);
+            SQLiteDatabase db = dbHelper.getWritableDatabase();
+            ContentValues cv = new ContentValues();
+            cv.put("SUBJECT", subject.getText().toString());
+            cv.put("PREPOD", prepod.getText().toString());
+            cv.put("ROOM", room.getText().toString());
+            cv.put("TIME_FROM", timeFrom.getText().toString());
+            cv.put("TIME_TILL", timeTill.getText().toString());
+            long rowID = db.insert("savelesson", null, cv);
+            Log.d(LOG_TAG, "row inserted, ID = " + rowID);
+            db.close();
+            dbHelper.close();
         }
     }
 
-    void loadText(){
-        sPref = getPreferences(MODE_PRIVATE);
-        //String savedText = sPref.getString("SUBJECT", "unknown");
-        //subject.setText(savedText);
+    void loadText() {
+        dbHelper = new DBHelper(this);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        Cursor c = db.query("savelesson", null, null, null, null, null, null);
+        if (c.moveToFirst()) {
+            int idColIndex = c.getColumnIndex("id");
+            int subjectColIndex = c.getColumnIndex("SUBJECT");
+            int prepodColIndex = c.getColumnIndex("PREPOD");
+            int roomColIndex = c.getColumnIndex("ROOM");
+            int timeFromColIndex = c.getColumnIndex("TIME_FROM");
+            int timeTillColIndex = c.getColumnIndex("TIME_TILL");
+            do {
+                Log.d(LOG_TAG, "ID = " + c.getInt(idColIndex));
+                LinearLayout linLayoutV = (LinearLayout) findViewById(R.id.linLayoutV);
+                LayoutInflater ltInflater = getLayoutInflater();
+                View item = ltInflater.inflate(R.layout.display_schedule_view, linLayoutV, false);
 
-        LinearLayout linLayoutV = (LinearLayout) findViewById(R.id.linLayoutV);
-        LayoutInflater ltInflater = getLayoutInflater();
-        View item = ltInflater.inflate(R.layout.display_schedule_view, linLayoutV, false);
+                String savedSubject = c.getString(subjectColIndex);
+                subject = (TextView) item.findViewById(R.id.subject);
+                subject.setText(savedSubject);
 
-        String savedSubject = sPref.getString("SUBJECT", "unknown");
-        subject = (TextView) item.findViewById(R.id.subject);
-        subject.setText(savedSubject);
+                String savedPrepod = c.getString(prepodColIndex);
+                prepod = (TextView) item.findViewById(R.id.prepod);
+                prepod.setText(savedPrepod);
 
-        String savedPrepod = sPref.getString("PREPOD", "unknown");
-        prepod = (TextView) item.findViewById(R.id.prepod);
-        prepod.setText(savedPrepod);
+                String savedRoom = c.getString(roomColIndex);
+                room = (TextView) item.findViewById(R.id.room);
+                room.setText(savedRoom);
 
-        String savedRoom = sPref.getString("ROOM", "unknown");
-        room = (TextView) item.findViewById(R.id.room);
-        room.setText(savedRoom);
+                String savedTimeFrom = c.getString(timeFromColIndex);
+                timeFrom = (TextView) item.findViewById(R.id.timeFrom);
+                timeFrom.setText(savedTimeFrom);
 
-        String savedTimeFrom = sPref.getString("TIME_FROM", "unknown");
-        timeFrom = (TextView) item.findViewById(R.id.timeFrom);
-        timeFrom.setText(savedTimeFrom);
+                String savedTimeTill = c.getString(timeTillColIndex);
+                timeTill = (TextView) item.findViewById(R.id.timeTill);
+                timeTill.setText(savedTimeTill);
 
-        String savedTimeTill = sPref.getString("TIME_TILL", "unknown");
-        timeTill = (TextView) item.findViewById(R.id.timeTill);
-        timeTill.setText(savedTimeTill);
+                item.getLayoutParams().width = LinearLayout.LayoutParams.MATCH_PARENT;
+                linLayoutV.addView(item);
 
-        item.getLayoutParams().width = LinearLayout.LayoutParams.MATCH_PARENT;
-        linLayoutV.addView(item);
+            } while (c.moveToNext());
+        } else c.close();
+        db.close();
+        dbHelper.close();
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
-
         Log.d(TAG, "MainActivity onRestart");
     }
 
@@ -168,7 +192,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onStart() {
         super.onStart();
-
         Log.d(TAG, "MainActivity onStart");
     }
 
@@ -197,7 +220,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        saveText();
         Log.d(TAG, "MainActivity onDestroy");
     }
 
@@ -211,9 +233,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.create_class){
+        if (id == R.id.create_class) {
 
-        }else if (id == R.id.found_class){
+        } else if (id == R.id.found_class) {
 
         }
 
@@ -222,3 +244,4 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return true;
     }
 }
+
