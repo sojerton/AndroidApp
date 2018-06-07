@@ -4,6 +4,8 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -21,11 +23,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener, View.OnLongClickListener {
 
     final String TAG = "lifecycle";
     final String LOG_TAG = "data";
-    Button myBtn;
+    Button myBtn, deleteBtn, delBtn;
     private Toolbar toolbar;
     TextView subject, prepod, room, timeFrom, timeTill;
     DBHelper dbHelper;
@@ -36,9 +38,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-
-        loadText();
         toolbar = findViewById(R.id.bar_main_toolbar);
         setSupportActionBar(toolbar);
         setTitle("Расписание");
@@ -55,6 +54,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        dbHelper = new DBHelper(this);
+
+        //deleteBtn.setOnLongClickListener(this);
+        //delBtn.setId(deleteBtn.getId());
+        // delBtn.setEnabled(true);
+        //delBtn.setOnLongClickListener(this);
+        loadText();
 
         Log.d(TAG, "MainActivity onCreate");
     }
@@ -97,6 +104,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String sTimeTill = intent.getStringExtra("timeTill");
         timeTill = (TextView) item.findViewById(R.id.timeTill);
         timeTill.setText(sTimeTill);
+
+        deleteBtn = new Button(this);
         saveText();
         item.getLayoutParams().width = LinearLayout.LayoutParams.MATCH_PARENT;
         linLayoutV.addView(item);
@@ -120,7 +129,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     void saveText() {
         if (subject != null) {
-            Log.d(LOG_TAG, "--- Insert in mytable: ---");
+            Log.d(LOG_TAG, "--- Insert in savelesson: ---");
             dbHelper = new DBHelper(this);
             SQLiteDatabase db = dbHelper.getWritableDatabase();
             ContentValues cv = new ContentValues();
@@ -130,6 +139,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             cv.put("TIME_FROM", timeFrom.getText().toString());
             cv.put("TIME_TILL", timeTill.getText().toString());
             long rowID = db.insert("savelesson", null, cv);
+            Integer id = (int) (long) rowID;
+            deleteBtn.setId(id);
+            deleteBtn.setEnabled(true);
+            deleteBtn.setOnLongClickListener(this);
             Log.d(LOG_TAG, "row inserted, ID = " + rowID);
             db.close();
             dbHelper.close();
@@ -241,6 +254,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
+
+    @Override
+    public boolean onLongClick(View v) {
+
+        int id = deleteBtn.getId();
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        db.delete("savelesson", "id = " + id, null);
+        db.close();
         return true;
     }
 }
