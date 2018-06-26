@@ -57,9 +57,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         dbHelper = new DBHelper(this);
 
-        //deleteBtn.setOnLongClickListener(this);
-        //delBtn.setId(deleteBtn.getId());
-        // delBtn.setEnabled(true)
         loadText();
 
         Log.d(TAG, "MainActivity onCreate");
