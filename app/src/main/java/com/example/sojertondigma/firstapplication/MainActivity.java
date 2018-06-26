@@ -59,8 +59,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         //deleteBtn.setOnLongClickListener(this);
         //delBtn.setId(deleteBtn.getId());
-        // delBtn.setEnabled(true);
-        //delBtn.setOnLongClickListener(this);
+        // delBtn.setEnabled(true)
         loadText();
 
         Log.d(TAG, "MainActivity onCreate");
