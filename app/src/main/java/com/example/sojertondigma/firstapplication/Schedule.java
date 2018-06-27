@@ -22,24 +22,48 @@ public class Schedule {
         return id;
     }
 
+    public void setId(long id) {
+        this.id = id;
+    }
+
     public String getmTimeFrom() {
         return mTimeFrom;
+    }
+
+    public void setTimeFrom(String mTimeFrom) {
+        this.mTimeFrom = mTimeFrom;
     }
 
     public String getmTimeTill() {
         return mTimeTill;
     }
 
+    public void setTimeTill(String mTimeTill) {
+        this.mTimeTill = mTimeTill;
+    }
+
     public String getmSubject() {
         return mSubject;
+    }
+
+    public void setSubject(String mSubject) {
+        this.mSubject = mSubject;
     }
 
     public String getmPrepod() {
         return mPrepod;
     }
 
+    public void setPrepod(String mPrepod) {
+        this.mPrepod = mPrepod;
+    }
+
     public String getmRoom() {
         return mRoom;
+    }
+
+    public void setRoom(String mRoom) {
+        this.mRoom = mRoom;
     }
 
     @Override
