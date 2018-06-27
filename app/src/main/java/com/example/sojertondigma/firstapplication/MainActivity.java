@@ -12,6 +12,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -22,6 +24,8 @@ import android.support.v7.widget.Toolbar;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.sojertondigma.firstapplication.adapter.RecyclerAdapter;
+
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener, View.OnLongClickListener {
 
@@ -29,6 +33,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     final String LOG_TAG = "data";
     Button myBtn, deleteBtn, delBtn;
     private Toolbar toolbar;
+    private RecyclerView recyclerView;
+    private RecyclerAdapter recyclerAdapter;
     TextView subject, prepod, room, timeFrom, timeTill;
     DBHelper dbHelper;
 
@@ -56,8 +62,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         navigationView.setNavigationItemSelectedListener(this);
 
         dbHelper = new DBHelper(this);
+        recyclerView = findViewById(R.id.recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerAdapter = new RecyclerAdapter();
+        recyclerView.setAdapter(recyclerAdapter);
 
-        loadText();
+        //loadText();
 
         Log.d(TAG, "MainActivity onCreate");
     }
@@ -77,9 +87,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (intent == null) {
             return;
         }
-        LinearLayout linLayoutV = (LinearLayout) findViewById(R.id.linLayoutV);
         LayoutInflater ltInflater = getLayoutInflater();
-        View item = ltInflater.inflate(R.layout.display_schedule_view, linLayoutV, false);
+        View item = ltInflater.inflate(R.layout.display_schedule_view, recyclerView, false);
 
         String sSubject = intent.getStringExtra("subject");
         subject = (TextView) item.findViewById(R.id.subject);
@@ -102,9 +111,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         timeTill.setText(sTimeTill);
 
         deleteBtn = new Button(this);
-        saveText();
+        //saveText();
         item.getLayoutParams().width = LinearLayout.LayoutParams.MATCH_PARENT;
-        linLayoutV.addView(item);
+        recyclerView.addView(item);
 
     }
 
@@ -122,7 +131,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         return super.onOptionsItemSelected(item);
     }
-
+/*
     void saveText() {
         if (subject != null) {
             Log.d(LOG_TAG, "--- Insert in savelesson: ---");
@@ -158,7 +167,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             int timeTillColIndex = c.getColumnIndex("TIME_TILL");
             do {
                 Log.d(LOG_TAG, "ID = " + c.getInt(idColIndex));
-                LinearLayout linLayoutV = (LinearLayout) findViewById(R.id.linLayoutV);
+                LinearLayout linLayoutV = (LinearLayout) findViewById(R.id.recycler_view);
                 LayoutInflater ltInflater = getLayoutInflater();
                 View item = ltInflater.inflate(R.layout.display_schedule_view, linLayoutV, false);
 
@@ -190,7 +199,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         db.close();
         dbHelper.close();
     }
-
+*/
     @Override
     protected void onRestart() {
         super.onRestart();
