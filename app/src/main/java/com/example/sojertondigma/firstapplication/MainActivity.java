@@ -138,11 +138,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             dbHelper = new DBHelper(this);
             SQLiteDatabase db = dbHelper.getWritableDatabase();
             ContentValues cv = new ContentValues();
-            cv.put("SUBJECT", subject.getText().toString());
-            cv.put("PREPOD", prepod.getText().toString());
-            cv.put("ROOM", room.getText().toString());
-            cv.put("TIME_FROM", timeFrom.getText().toString());
-            cv.put("TIME_TILL", timeTill.getText().toString());
+            cv.put("COLUMN_SUBJECT", subject.getText().toString());
+            cv.put("COLUMN_PREPOD", prepod.getText().toString());
+            cv.put("COLUMN_ROOM", room.getText().toString());
+            cv.put("COLUMN_TIME_FROM", timeFrom.getText().toString());
+            cv.put("COLUMN_TIME_TILL", timeTill.getText().toString());
             long rowID = db.insert("savelesson", null, cv);
             Integer id = (int) (long) rowID;
             deleteBtn.setId(id);

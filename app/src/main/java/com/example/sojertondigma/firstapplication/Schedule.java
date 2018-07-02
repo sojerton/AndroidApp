@@ -9,6 +9,10 @@ public class Schedule {
     private String mPrepod;
     private String mRoom;
 
+    public Schedule() {
+
+    }
+
     public Schedule(Long id, String mTimeFrom, String mTimeTill, String mSubject, String mPrepod, String mRoom) {
         this.id = id;
         this.mTimeFrom = mTimeFrom;

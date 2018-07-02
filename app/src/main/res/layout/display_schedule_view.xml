@@ -105,7 +105,7 @@
 
     <Button
 
-        android:id="@+id/button"
+        android:id="@+id/deleteSchedule"
         android:layout_width="70dp"
         android:layout_height="39dp"
         android:longClickable="true"
