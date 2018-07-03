@@ -18,7 +18,11 @@
         </activity>
         <activity
             android:name=".AddLessonActivity"
+            android:parentActivityName=".MainActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <activity
+            android:name=".UpdateActivity"
+            android:parentActivityName=".MainActivity" />
     </application>
 
 </manifest>

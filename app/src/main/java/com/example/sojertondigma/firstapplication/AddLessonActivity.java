@@ -9,12 +9,19 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 public class AddLessonActivity extends AppCompatActivity implements View.OnClickListener {
 
     final String TAG = "lifecycle";
     private ImageButton mAddLessonCloseBtn;
     private Button mAddedBtn;
+    private EditText editTextSubject;
+    private EditText editTextPrepod;
+    private EditText editTextRoom;
+    private EditText editTextTimeFrom;
+    private EditText editTextTimeTill;
+    private DBHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,28 +40,43 @@ public class AddLessonActivity extends AppCompatActivity implements View.OnClick
         mAddedBtn = findViewById(R.id.addedBtn);
         mAddedBtn.setOnClickListener(this);
 
-        EditText editTextSubject = (EditText) findViewById(R.id.editTextSubject);
-        editTextSubject.requestFocus();
-
         Log.d(TAG, "AddLessonActivity onCreate");
     }
 
     @Override
     public void onClick(View v) {
-        Intent intent = new Intent(this, MainActivity.class);
-        EditText editTextSubject = (EditText) findViewById(R.id.editTextSubject);
-        intent.putExtra("subject", editTextSubject.getText().toString());
-        EditText editTextPrepod = (EditText) findViewById(R.id.editTextPrepod);
-        intent.putExtra("prepod", editTextPrepod.getText().toString());
-        EditText editTextRoom = (EditText) findViewById(R.id.editTextRoom);
-        intent.putExtra("room", editTextRoom.getText().toString());
-        EditText editTextTimeFrom = (EditText) findViewById(R.id.editTextTimeFrom);
-        intent.putExtra("timeFrom", editTextTimeFrom.getText().toString());
-        EditText editTextTimeTil = (EditText) findViewById(R.id.editTextTimeTill);
-        intent.putExtra("timeTill", editTextTimeTil.getText().toString());
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-        setResult(RESULT_OK, intent);
-        finish();
+        String mSubject = editTextSubject.getText().toString().trim();
+        String mPrepod = editTextPrepod.getText().toString().trim();
+        String mRoom = editTextRoom.getText().toString().trim();
+        String mTimeFrom = editTextTimeFrom.getText().toString().trim();
+        String mTimeTill = editTextTimeTill.getText().toString().trim();
+        dbHelper = new DBHelper(this);
+        if(mSubject.isEmpty()){
+            Toast.makeText(this, "You must enter a subject", Toast.LENGTH_SHORT).show();
+        }
+
+        if(mPrepod.isEmpty()){
+            Toast.makeText(this, "You must enter a teacher", Toast.LENGTH_SHORT).show();
+        }
+
+        if(mRoom.isEmpty()){
+            Toast.makeText(this, "You must enter a classroom", Toast.LENGTH_SHORT).show();
+        }
+
+        if(mTimeFrom.isEmpty()){
+            Toast.makeText(this, "You must enter a time", Toast.LENGTH_SHORT).show();
+        }
+
+        if(mTimeTill.isEmpty()){
+            Toast.makeText(this, "You must enter a time", Toast.LENGTH_SHORT).show();
+        }
+        Schedule schedule = new Schedule(mSubject, mPrepod, mRoom, mTimeFrom, mTimeTill);
+        dbHelper.saveNewSchedule(schedule);
+        goBackHome();
+    }
+
+    public void goBackHome(){
+        startActivity(new Intent(AddLessonActivity.this, MainActivity.class));
     }
 
     @Override
@@ -74,43 +96,6 @@ public class AddLessonActivity extends AppCompatActivity implements View.OnClick
     @Override
     public void onBackPressed() {
         finish();
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        Log.d(TAG, "AddLessonActivity onRestart");
-    }
-
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        Log.d(TAG, "AddLessonActivity onStart");
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Log.d(TAG, "AddLessonActivity onResume");
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Log.d(TAG, "AddLessonActivity onPause");
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        Log.d(TAG, "AddLessonActivity onStop");
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Log.d(TAG, "AddLessonActivity onDestroy");
     }
 
 }

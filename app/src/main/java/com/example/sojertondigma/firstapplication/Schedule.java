@@ -13,8 +13,8 @@ public class Schedule {
 
     }
 
-    public Schedule(Long id, String mTimeFrom, String mTimeTill, String mSubject, String mPrepod, String mRoom) {
-        this.id = id;
+    public Schedule(String mSubject, String mPrepod, String mRoom, String mTimeFrom, String mTimeTill) {
+        //this.id = id;
         this.mTimeFrom = mTimeFrom;
         this.mTimeTill = mTimeTill;
         this.mSubject = mSubject;

@@ -3,6 +3,7 @@ package com.example.sojertondigma.firstapplication.adapter;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.sojertondigma.firstapplication.DBHelper;
 import com.example.sojertondigma.firstapplication.R;
 import com.example.sojertondigma.firstapplication.Schedule;
 
@@ -104,8 +106,14 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                 builder.setNegativeButton("Delete", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                       // DBHelper dbHelper = new DBHelper(mContext);
+                        DBHelper dbHelper = new DBHelper(mContext);
+                        dbHelper.deleteSchedule(schedule.getId(), mContext);
 
+                        mScheduleList.remove(position);
+                        mRecyclerView.removeViewAt(position);
+                        notifyItemRemoved(position);
+                        notifyItemRangeChanged(position, mScheduleList.size());
+                        notifyDataSetChanged();
                     }
                 });
                 builder.create().show();
@@ -113,7 +121,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         });
     }
 
-   // private void goToUpdateActivity(long )
+   /*private void goToUpdateActivity(long scheduleId){
+        Intent goToUpdate = new Intent(mContext, UpdateActivity.class);
+        goToUpdate.putExtra("USER_ID", scheduleId);
+        mContext.startActivity(goToUpdate);
+   }*/
 
     @Override
     public int getItemCount() {
