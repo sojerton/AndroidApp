@@ -25,6 +25,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.sojertondigma.firstapplication.adapter.RecyclerAdapter;
+import com.example.sojertondigma.firstapplication.DBHelper;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener, View.OnLongClickListener {
@@ -34,9 +35,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Button myBtn, deleteBtn, delBtn;
     private Toolbar toolbar;
     private RecyclerView recyclerView;
+    private RecyclerView.LayoutManager mLayoutManager;
     private RecyclerAdapter recyclerAdapter;
+    private DBHelper dbHelper;
+    private String filter = "";
     TextView subject, prepod, room, timeFrom, timeTill;
-    DBHelper dbHelper;
 
 
     @Override
@@ -63,13 +66,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         dbHelper = new DBHelper(this);
         recyclerView = findViewById(R.id.recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerAdapter = new RecyclerAdapter();
-        recyclerView.setAdapter(recyclerAdapter);
-
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(mLayoutManager);
+        populateRecyclerView(filter);
         //loadText();
 
         Log.d(TAG, "MainActivity onCreate");
+    }
+
+    private void populateRecyclerView(String filter){
+        dbHelper = new DBHelper(this);
+        recyclerAdapter = new RecyclerAdapter(dbHelper.scheduleList(filter), this, recyclerView);
+        recyclerView.setAdapter(recyclerAdapter);
     }
 
     @Override
@@ -82,6 +90,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    /*
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         if (intent == null) {
@@ -114,8 +123,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //saveText();
         item.getLayoutParams().width = LinearLayout.LayoutParams.MATCH_PARENT;
         recyclerView.addView(item);
-
     }
+    */
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

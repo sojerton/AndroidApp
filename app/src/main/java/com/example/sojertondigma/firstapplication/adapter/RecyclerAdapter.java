@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.example.sojertondigma.firstapplication.DBHelper;
 import com.example.sojertondigma.firstapplication.R;
 import com.example.sojertondigma.firstapplication.Schedule;
+import com.example.sojertondigma.firstapplication.UpdateLessonActivity;
 
 import java.util.List;
 
@@ -90,7 +91,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         holder.timeFromTextView.setText(schedule.getmTimeFrom());
         holder.timeTillTextView.setText(schedule.getmTimeTill());
 
-
         holder.deleteBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
@@ -121,11 +121,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         });
     }
 
-   /*private void goToUpdateActivity(long scheduleId){
-        Intent goToUpdate = new Intent(mContext, UpdateActivity.class);
+   private void goToUpdateActivity(long scheduleId){
+        Intent goToUpdate = new Intent(mContext, UpdateLessonActivity.class);
         goToUpdate.putExtra("USER_ID", scheduleId);
         mContext.startActivity(goToUpdate);
-   }*/
+   }
 
     @Override
     public int getItemCount() {
