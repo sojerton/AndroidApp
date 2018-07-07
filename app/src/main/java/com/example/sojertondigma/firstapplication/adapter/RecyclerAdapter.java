@@ -58,7 +58,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         notifyItemRemoved(position);
     }
 
-    public RecyclerAdapter(List<Schedule> myDataset, Context context, RecyclerView recyclerView){
+    public RecyclerAdapter(List<Schedule> myDataset, Context context, RecyclerView recyclerView) {
         mScheduleList = myDataset;
         mContext = context;
         mRecyclerView = recyclerView;
@@ -81,9 +81,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         holder.timeFromTextView.setText(schedule.getmTimeFrom());
         holder.timeTillTextView.setText(schedule.getmTimeTill());
 
-        holder.deleteBtn.setOnClickListener(new View.OnClickListener(){
+        holder.deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
+            public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
                 builder.setTitle("Confirmation.");
                 builder.setMessage("Are your sure you want to delete this schedule?");
@@ -119,11 +119,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     }
 
 
-   private void goToUpdateActivity(long scheduleId){
+    private void goToUpdateActivity(long scheduleId) {
         Intent goToUpdate = new Intent(mContext, UpdateLessonActivity.class);
         goToUpdate.putExtra("USER_ID", scheduleId);
         mContext.startActivity(goToUpdate);
-   }
+    }
 
 
     @Override

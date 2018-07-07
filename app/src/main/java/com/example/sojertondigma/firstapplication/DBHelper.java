@@ -15,7 +15,7 @@ import java.util.List;
 public class DBHelper extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME = "savelesson";
-    private static final int DATABASE_VERSION = 1 ;
+    private static final int DATABASE_VERSION = 1;
     public static final String COLUMN_ID = "_id";
     public static final String COLUMN_SUBJECT = "SUBJECT";
     public static final String COLUMN_PREPOD = "PREPOD";
@@ -57,11 +57,11 @@ public class DBHelper extends SQLiteOpenHelper {
         values.put(COLUMN_TIME_FROM, schedule.getmTimeFrom());
         values.put(COLUMN_TIME_TILL, schedule.getmTimeTill());
 
-        db.insert(DATABASE_NAME,null, values);
+        db.insert(DATABASE_NAME, null, values);
         db.close();
     }
 
-    public List<Schedule> scheduleList(){
+    public List<Schedule> scheduleList() {
         String query;
         query = "SELECT * FROM " + DATABASE_NAME;
 
@@ -71,7 +71,7 @@ public class DBHelper extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(query, null);
         Schedule schedule;
 
-        if(cursor.moveToFirst()){
+        if (cursor.moveToFirst()) {
             do {
                 schedule = new Schedule();
 
@@ -82,18 +82,18 @@ public class DBHelper extends SQLiteOpenHelper {
                 schedule.setTimeFrom(cursor.getString(cursor.getColumnIndex(COLUMN_TIME_FROM)));
                 schedule.setTimeTill(cursor.getString(cursor.getColumnIndex(COLUMN_TIME_TILL)));
                 scheduleLinkedList.add(schedule);
-            }while(cursor.moveToNext());
+            } while (cursor.moveToNext());
         }
         return scheduleLinkedList;
     }
 
-    public Schedule getSchedule(long id){
+    public Schedule getSchedule(long id) {
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "SELECT * FROM " + DATABASE_NAME + " WHERE _id=" + id;
         Cursor cursor = db.rawQuery(query, null);
 
         Schedule receivedSchedule = new Schedule();
-        if(cursor.getCount() > 0){
+        if (cursor.getCount() > 0) {
             cursor.moveToFirst();
 
             receivedSchedule.setSubject(cursor.getString(cursor.getColumnIndex(COLUMN_SUBJECT)));
@@ -105,13 +105,13 @@ public class DBHelper extends SQLiteOpenHelper {
         return receivedSchedule;
     }
 
-    public void deleteSchedule(long id, Context context){
+    public void deleteSchedule(long id, Context context) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("DELETE FROM " + DATABASE_NAME + " WHERE _id='" + id + "'");
         Toast.makeText(context, "Deleted successfully.", Toast.LENGTH_SHORT).show();
     }
 
-    public void updateSchedule(long scheduleId, Context context, Schedule updatedSchedule){
+    public void updateSchedule(long scheduleId, Context context, Schedule updatedSchedule) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("UPDATE  " + DATABASE_NAME + " SET SUBJECT ='" + updatedSchedule.getmSubject() + "', PREPOD ='" + updatedSchedule.getmPrepod() + "', ROOM ='" + updatedSchedule.getmRoom() + "', TIME_FROM ='" + updatedSchedule.getmTimeFrom() + "', TIME_TILL ='" + updatedSchedule.getmTimeTill() + "' WHERE _id='" + scheduleId + "'");
         Toast.makeText(context, "Updated successfully.", Toast.LENGTH_SHORT).show();

@@ -9,8 +9,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,6 +19,7 @@ import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
 
 import com.example.sojertondigma.firstapplication.adapter.RecyclerAdapter;
+import com.example.sojertondigma.firstapplication.swipe.SwipeController;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
@@ -61,10 +62,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         populateRecyclerView();
 
+        SwipeController swipeController = new SwipeController();
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(swipeController);
+        itemTouchHelper.attachToRecyclerView(recyclerView);
+
         Log.d(TAG, "MainActivity onCreate");
     }
 
-    private void populateRecyclerView(){
+    private void populateRecyclerView() {
         dbHelper = new DBHelper(this);
         recyclerAdapter = new RecyclerAdapter(dbHelper.scheduleList(), this, recyclerView);
         recyclerView.setAdapter(recyclerAdapter);
@@ -94,75 +99,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         return super.onOptionsItemSelected(item);
     }
-/*
-    void saveText() {
-        if (subject != null) {
-            Log.d(LOG_TAG, "--- Insert in savelesson: ---");
-            dbHelper = new DBHelper(this);
-            SQLiteDatabase db = dbHelper.getWritableDatabase();
-            ContentValues cv = new ContentValues();
-            cv.put("COLUMN_SUBJECT", subject.getText().toString());
-            cv.put("COLUMN_PREPOD", prepod.getText().toString());
-            cv.put("COLUMN_ROOM", room.getText().toString());
-            cv.put("COLUMN_TIME_FROM", timeFrom.getText().toString());
-            cv.put("COLUMN_TIME_TILL", timeTill.getText().toString());
-            long rowID = db.insert("savelesson", null, cv);
-            Integer id = (int) (long) rowID;
-            deleteBtn.setId(id);
-            deleteBtn.setEnabled(true);
-            deleteBtn.setOnLongClickListener(this);
-            Log.d(LOG_TAG, "row inserted, ID = " + rowID);
-            db.close();
-            dbHelper.close();
-        }
-    }
 
-    void loadText() {
-        dbHelper = new DBHelper(this);
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-        Cursor c = db.query("savelesson", null, null, null, null, null, null);
-        if (c.moveToFirst()) {
-            int idColIndex = c.getColumnIndex("id");
-            int subjectColIndex = c.getColumnIndex("SUBJECT");
-            int prepodColIndex = c.getColumnIndex("PREPOD");
-            int roomColIndex = c.getColumnIndex("ROOM");
-            int timeFromColIndex = c.getColumnIndex("TIME_FROM");
-            int timeTillColIndex = c.getColumnIndex("TIME_TILL");
-            do {
-                Log.d(LOG_TAG, "ID = " + c.getInt(idColIndex));
-                LinearLayout linLayoutV = (LinearLayout) findViewById(R.id.recycler_view);
-                LayoutInflater ltInflater = getLayoutInflater();
-                View item = ltInflater.inflate(R.layout.display_schedule_view, linLayoutV, false);
-
-                String savedSubject = c.getString(subjectColIndex);
-                subject = (TextView) item.findViewById(R.id.subject);
-                subject.setText(savedSubject);
-
-                String savedPrepod = c.getString(prepodColIndex);
-                prepod = (TextView) item.findViewById(R.id.prepod);
-                prepod.setText(savedPrepod);
-
-                String savedRoom = c.getString(roomColIndex);
-                room = (TextView) item.findViewById(R.id.room);
-                room.setText(savedRoom);
-
-                String savedTimeFrom = c.getString(timeFromColIndex);
-                timeFrom = (TextView) item.findViewById(R.id.timeFrom);
-                timeFrom.setText(savedTimeFrom);
-
-                String savedTimeTill = c.getString(timeTillColIndex);
-                timeTill = (TextView) item.findViewById(R.id.timeTill);
-                timeTill.setText(savedTimeTill);
-
-                item.getLayoutParams().width = LinearLayout.LayoutParams.MATCH_PARENT;
-                linLayoutV.addView(item);
-
-            } while (c.moveToNext());
-        } else c.close();
-        db.close();
-        dbHelper.close();
-    }
-*/
     @Override
     protected void onRestart() {
         super.onRestart();

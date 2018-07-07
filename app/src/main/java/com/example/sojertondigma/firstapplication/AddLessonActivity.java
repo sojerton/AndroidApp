@@ -62,23 +62,23 @@ public class AddLessonActivity extends AppCompatActivity {
         String mTimeFrom = editTextTimeFrom.getText().toString().trim();
         String mTimeTill = editTextTimeTill.getText().toString().trim();
         dbHelper = new DBHelper(this);
-        if(mSubject.isEmpty()){
+        if (mSubject.isEmpty()) {
             Toast.makeText(this, "Необходимо указать предмет", Toast.LENGTH_SHORT).show();
         }
 
-        if(mPrepod.isEmpty()){
+        if (mPrepod.isEmpty()) {
             Toast.makeText(this, "Необходимо указать учителя", Toast.LENGTH_SHORT).show();
         }
 
-        if(mRoom.isEmpty()){
+        if (mRoom.isEmpty()) {
             Toast.makeText(this, "Необходимо указать кабинет", Toast.LENGTH_SHORT).show();
         }
 
-        if(mTimeFrom.isEmpty()){
+        if (mTimeFrom.isEmpty()) {
             Toast.makeText(this, "Необходимо указать время", Toast.LENGTH_SHORT).show();
         }
 
-        if(mTimeTill.isEmpty()){
+        if (mTimeTill.isEmpty()) {
             Toast.makeText(this, "Необходимо указать время", Toast.LENGTH_SHORT).show();
         }
 
@@ -87,7 +87,7 @@ public class AddLessonActivity extends AppCompatActivity {
         goBackHome();
     }
 
-    public void goBackHome(){
+    public void goBackHome() {
         startActivity(new Intent(AddLessonActivity.this, MainActivity.class));
     }
 

@@ -33,7 +33,7 @@ public class UpdateLessonActivity extends AppCompatActivity {
         editTextTimeFrom = findViewById(R.id.editTextTimeFromUpdate);
         editTextTimeTill = findViewById(R.id.editTextTimeTillUpdate);
         mUpdateBtn = findViewById(R.id.updatedBtn);
-        mUpdateLessonCloseBtn = (ImageButton) findViewById(R.id.updateLessonCloseBtn);
+        mUpdateLessonCloseBtn = findViewById(R.id.updateLessonCloseBtn);
 
         dbHelper = new DBHelper(this);
 
