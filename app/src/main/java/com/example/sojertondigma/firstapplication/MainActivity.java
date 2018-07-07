@@ -1,11 +1,6 @@
 package com.example.sojertondigma.firstapplication;
 
-import android.content.ContentValues;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -21,18 +16,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.support.v7.widget.Toolbar;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.sojertondigma.firstapplication.adapter.RecyclerAdapter;
-import com.example.sojertondigma.firstapplication.DBHelper;
 
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener, View.OnLongClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
 
     final String TAG = "lifecycle";
-    final String LOG_TAG = "data";
-    Button myBtn, deleteBtn, delBtn;
+    Button myBtn;
     private Toolbar toolbar;
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -64,19 +56,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        dbHelper = new DBHelper(this);
         recyclerView = findViewById(R.id.recycler_view);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(mLayoutManager);
-        populateRecyclerView(filter);
-        //loadText();
+        //recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        populateRecyclerView();
 
         Log.d(TAG, "MainActivity onCreate");
     }
 
-    private void populateRecyclerView(String filter){
+    private void populateRecyclerView(){
         dbHelper = new DBHelper(this);
-        recyclerAdapter = new RecyclerAdapter(dbHelper.scheduleList(filter), this, recyclerView);
+        recyclerAdapter = new RecyclerAdapter(dbHelper.scheduleList(), this, recyclerView);
         recyclerView.setAdapter(recyclerAdapter);
     }
 
@@ -89,42 +79,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             super.onBackPressed();
         }
     }
-
-    /*
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        if (intent == null) {
-            return;
-        }
-        LayoutInflater ltInflater = getLayoutInflater();
-        View item = ltInflater.inflate(R.layout.display_schedule_view, recyclerView, false);
-
-        String sSubject = intent.getStringExtra("subject");
-        subject = (TextView) item.findViewById(R.id.subject);
-        subject.setText(sSubject);
-
-        String sPrepod = intent.getStringExtra("prepod");
-        prepod = (TextView) item.findViewById(R.id.prepod);
-        prepod.setText(sPrepod);
-
-        String sRoom = intent.getStringExtra("room");
-        room = (TextView) item.findViewById(R.id.room);
-        room.setText(sRoom);
-
-        String sTimeFrom = intent.getStringExtra("timeFrom");
-        timeFrom = (TextView) item.findViewById(R.id.timeFrom);
-        timeFrom.setText(sTimeFrom);
-
-        String sTimeTill = intent.getStringExtra("timeTill");
-        timeTill = (TextView) item.findViewById(R.id.timeTill);
-        timeTill.setText(sTimeTill);
-
-        deleteBtn = new Button(this);
-        //saveText();
-        item.getLayoutParams().width = LinearLayout.LayoutParams.MATCH_PARENT;
-        recyclerView.addView(item);
-    }
-    */
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -225,8 +179,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onResume() {
         super.onResume();
-
-
+        recyclerAdapter.notifyDataSetChanged();
         Log.d(TAG, "MainActivity onResume");
     }
 
@@ -253,10 +206,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         Intent intent = new Intent(this, AddLessonActivity.class);
-        startActivityForResult(intent, 1);
+        startActivity(intent);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -271,14 +223,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return true;
     }
 
-    @Override
-    public boolean onLongClick(View v) {
-
-        int id = deleteBtn.getId();
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-        db.delete("savelesson", "id = " + id, null);
-        db.close();
-        return true;
-    }
 }
 

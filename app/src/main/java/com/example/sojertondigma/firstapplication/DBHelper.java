@@ -11,6 +11,7 @@ import android.widget.Toast;
 import java.util.LinkedList;
 import java.util.List;
 
+
 public class DBHelper extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME = "savelesson";
@@ -60,14 +61,12 @@ public class DBHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-    public List<Schedule> scheduleList(String filter){
+    public List<Schedule> scheduleList(){
         String query;
-        if(filter.equals("")){
-            query = "SELECT * FROM " + DATABASE_NAME;
-        }else{
-            query = "SELECT * FROM " + DATABASE_NAME + " ORDER BY " + filter;
-        }
+        query = "SELECT * FROM " + DATABASE_NAME;
+
         List<Schedule> scheduleLinkedList = new LinkedList<>();
+
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(query, null);
         Schedule schedule;
@@ -114,7 +113,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public void updateSchedule(long scheduleId, Context context, Schedule updatedSchedule){
         SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL("UPDATE " + DATABASE_NAME + " SET SUBJECT ='" + updatedSchedule.getmSubject() + "', PREPOD ='" + updatedSchedule.getmPrepod() + "', ROOM ='" + updatedSchedule.getmRoom() + "', TIME_FROM ='" + updatedSchedule.getmTimeFrom() + "', TIME_TILL ='" + updatedSchedule.getmTimeTill() + "' WHERE _id'" + scheduleId + "'");
+        db.execSQL("UPDATE  " + DATABASE_NAME + " SET SUBJECT ='" + updatedSchedule.getmSubject() + "', PREPOD ='" + updatedSchedule.getmPrepod() + "', ROOM ='" + updatedSchedule.getmRoom() + "', TIME_FROM ='" + updatedSchedule.getmTimeFrom() + "', TIME_TILL ='" + updatedSchedule.getmTimeTill() + "' WHERE _id='" + scheduleId + "'");
         Toast.makeText(context, "Updated successfully.", Toast.LENGTH_SHORT).show();
     }
 }

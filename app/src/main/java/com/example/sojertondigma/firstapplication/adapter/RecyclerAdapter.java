@@ -16,19 +16,16 @@ import com.example.sojertondigma.firstapplication.R;
 import com.example.sojertondigma.firstapplication.Schedule;
 import com.example.sojertondigma.firstapplication.UpdateLessonActivity;
 
+import java.util.Collection;
 import java.util.List;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
-
-    public RecyclerAdapter(){
-
-    }
 
     private Context mContext;
     private RecyclerView mRecyclerView;
     private List<Schedule> mScheduleList;
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder {
 
         public TextView subjectTextView;
         public TextView prepodTextView;
@@ -41,6 +38,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
         public ViewHolder(View itemView) {
             super(itemView);
+            layout = itemView;
             subjectTextView = itemView.findViewById(R.id.subject);
             prepodTextView = itemView.findViewById(R.id.prepod);
             roomTextView = itemView.findViewById(R.id.room);
@@ -48,20 +46,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             timeTillTextView = itemView.findViewById(R.id.timeTill);
             deleteBtn = itemView.findViewById(R.id.deleteSchedule);
         }
-        /*
-        public void bind(Schedule schedule) {
-            subjectTextView.setText(schedule.getmSubject());
-            prepodTextView.setText(schedule.getmPrepod());
-            roomTextView.setText(schedule.getmRoom());
-            timeFromTextView.setText(String.valueOf(schedule.getmTimeFrom()));
-            timeTillTextView.setText(String.valueOf(schedule.getmTimeTill()));
-        }
-        */
     }
 
-    public void add(int position, Schedule schedule) {
-        mScheduleList.add(position, schedule);
-        notifyItemInserted(position);
+    public void add(Collection<Schedule> schedule) {
+        mScheduleList.addAll(schedule);
+        notifyDataSetChanged();
     }
 
     public void remove(int position) {
@@ -77,9 +66,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
     @Override
     public RecyclerAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.display_schedule_view, parent, false);
-        return new ViewHolder(view);
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        View view = inflater.inflate(R.layout.display_schedule_view, parent, false);
+        ViewHolder vh = new ViewHolder(view);
+        return vh;
     }
 
     @Override
@@ -103,6 +93,13 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                         dialog.dismiss();
                     }
                 });
+                builder.setNeutralButton("Update", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        goToUpdateActivity(schedule.getId());
+                    }
+                });
+
                 builder.setNegativeButton("Delete", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -121,11 +118,13 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         });
     }
 
+
    private void goToUpdateActivity(long scheduleId){
         Intent goToUpdate = new Intent(mContext, UpdateLessonActivity.class);
         goToUpdate.putExtra("USER_ID", scheduleId);
         mContext.startActivity(goToUpdate);
    }
+
 
     @Override
     public int getItemCount() {

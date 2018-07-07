@@ -21,7 +21,7 @@
             android:parentActivityName=".MainActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
-            android:name=".UpdateActivity"
+            android:name=".UpdateLessonActivity"
             android:parentActivityName=".MainActivity" />
     </application>
 

@@ -10,11 +10,9 @@ public class Schedule {
     private String mRoom;
 
     public Schedule() {
-
     }
 
     public Schedule(String mSubject, String mPrepod, String mRoom, String mTimeFrom, String mTimeTill) {
-        //this.id = id;
         this.mTimeFrom = mTimeFrom;
         this.mTimeTill = mTimeTill;
         this.mSubject = mSubject;
@@ -69,7 +67,7 @@ public class Schedule {
     public void setRoom(String mRoom) {
         this.mRoom = mRoom;
     }
-
+    /*
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -97,5 +95,5 @@ public class Schedule {
         result = 31 * result + (mPrepod != null ? mPrepod.hashCode() : 0);
         result = 31 * result + (mRoom != null ? mRoom.hashCode() : 0);
         return result;
-    }
+    }*/
 }
