@@ -7,8 +7,10 @@
     <color name="colorWhite">#FFFFFF</color>
 
     <color name="primary">#ff9800</color>
+    <color name="primary_background">#b36b00</color>
     <color name="primary_dark">#F57C00</color>
     <color name="primary_light">#FFE0B2</color>
+    <color name="primary_light_background">#bca077</color>
     <color name="accent">#7c4dff</color>
     <color name="accent_dark">#3405B7</color>
     <color name="primary_text">#212121</color>

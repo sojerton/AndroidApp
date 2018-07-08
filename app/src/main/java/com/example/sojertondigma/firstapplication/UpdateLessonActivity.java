@@ -102,6 +102,7 @@ public class UpdateLessonActivity extends AppCompatActivity {
 
     private void goBackHome() {
         startActivity(new Intent(this, MainActivity.class));
+        finish();
     }
 
     @Override

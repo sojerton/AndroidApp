@@ -1,6 +1,7 @@
 package com.example.sojertondigma.firstapplication;
 
 import android.content.Intent;
+import android.graphics.Canvas;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -20,6 +21,7 @@ import android.widget.TextView;
 
 import com.example.sojertondigma.firstapplication.adapter.RecyclerAdapter;
 import com.example.sojertondigma.firstapplication.swipe.SwipeController;
+import com.example.sojertondigma.firstapplication.swipe.SwipeControllerActions;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
@@ -33,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private DBHelper dbHelper;
     private String filter = "";
     TextView subject, prepod, room, timeFrom, timeTill;
-
+    SwipeController swipeController = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,16 +59,33 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        InitRecyclerView();
+
+        Log.d(TAG, "MainActivity onCreate");
+    }
+
+    private void InitRecyclerView() {
         recyclerView = findViewById(R.id.recycler_view);
         //recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         populateRecyclerView();
 
-        SwipeController swipeController = new SwipeController();
+        swipeController = new SwipeController(new SwipeControllerActions() {
+            @Override
+            public void onRightClicked(int position) {
+                recyclerAdapter.remove(position);
+                recyclerAdapter.notifyItemRemoved(position);
+                recyclerAdapter.notifyItemRangeChanged(position, recyclerAdapter.getItemCount());
+            }
+        });
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(swipeController);
         itemTouchHelper.attachToRecyclerView(recyclerView);
-
-        Log.d(TAG, "MainActivity onCreate");
+        recyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
+            @Override
+            public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
+                swipeController.onDraw(c);
+            }
+        });
     }
 
     private void populateRecyclerView() {

@@ -53,7 +53,17 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         notifyDataSetChanged();
     }
 
-    public void remove(int position) {
+    public void remove(final int position) {
+        final Schedule schedule = mScheduleList.get(position);
+        DBHelper dbHelper = new DBHelper(mContext);
+        dbHelper.deleteSchedule(schedule.getId(), mContext);
+
+        mScheduleList.remove(position);
+        mRecyclerView.removeViewAt(position);
+        notifyItemRemoved(position);
+        notifyItemRangeChanged(position, mScheduleList.size());
+        notifyDataSetChanged();
+
         mScheduleList.remove(position);
         notifyItemRemoved(position);
     }

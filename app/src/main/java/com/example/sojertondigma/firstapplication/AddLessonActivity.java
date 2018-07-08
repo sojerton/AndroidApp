@@ -89,6 +89,7 @@ public class AddLessonActivity extends AppCompatActivity {
 
     public void goBackHome() {
         startActivity(new Intent(AddLessonActivity.this, MainActivity.class));
+        finish();
     }
 
     @Override
