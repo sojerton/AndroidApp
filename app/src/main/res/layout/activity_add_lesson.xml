@@ -167,10 +167,10 @@
         android:layout_toEndOf="@+id/addLessonCloseBtn"
         android:ems="10"
         android:imeOptions="actionNext"
-        android:inputType="textPersonName"
+        android:inputType="datetime"
         android:nextFocusForward="@+id/editTextTimeFrom"
         android:singleLine="true"
-        android:maxLength="4"
+        android:maxLength="2"
         app:layout_constraintBottom_toTopOf="@+id/textView5"
         app:layout_constraintStart_toStartOf="@+id/editTextPrepod"
         app:layout_constraintTop_toBottomOf="@+id/editTextPrepod" />

@@ -4,106 +4,77 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="70dp"
-    android:layout_marginTop="20dp"
     android:background="@drawable/gradient_lesson"
     android:orientation="horizontal"
-    tools:layout_editor_absoluteX="10dp"
-    tools:layout_editor_absoluteY="25dp">
-
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="3dp"
-        android:text="Предмет: "
-        android:textSize="14sp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/subject"
-        app:layout_constraintEnd_toStartOf="@+id/subject"
-        app:layout_constraintStart_toStartOf="parent" />
+    tools:layout_editor_absoluteX="8dp"
+    tools:layout_editor_absoluteY="33dp"
+    android:layout_margin="6dp">
 
     <TextView
         android:id="@+id/subject"
-        android:layout_width="80dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="21dp"
+        android:layout_width="161dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="101dp"
         android:textColor="@color/colorWhite"
-        app:layout_constraintEnd_toStartOf="@+id/textView8"
-        app:layout_constraintStart_toEndOf="@+id/textView6"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="2dp"
-        android:text="Препод. "
-        android:textSize="14sp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/prepod"
+        app:layout_constraintBottom_toBottomOf="@+id/timeFrom"
         app:layout_constraintEnd_toStartOf="@+id/prepod"
-        app:layout_constraintStart_toEndOf="@+id/subject" />
+        app:layout_constraintStart_toEndOf="@+id/timeFrom"
+        app:layout_constraintTop_toBottomOf="@+id/timeFrom"
+        app:layout_constraintVertical_bias="0.45" />
 
-    <TextView
+    <ImageButton
         android:id="@+id/prepod"
-        android:layout_width="80dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/icons"
+        android:foreground="@mipmap/ic_person"
         android:textColor="@color/colorWhite"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView8"
+        app:layout_constraintStart_toEndOf="@+id/room"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView9"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="3dp"
-        android:text="Каб. "
-        android:textSize="14sp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/room"
-        app:layout_constraintEnd_toStartOf="@+id/room"
-        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/room"
-        android:layout_width="45dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="47dp"
-        android:layout_marginTop="7dp"
+        android:layout_width="30dp"
+        android:layout_height="39dp"
+        android:layout_marginStart="3dp"
         android:textColor="@color/colorWhite"
-        app:layout_constraintEnd_toStartOf="@+id/timeFrom"
-        app:layout_constraintStart_toEndOf="@+id/textView9"
-        app:layout_constraintTop_toBottomOf="@+id/textView6" />
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/subject"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/textView10"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Время: "
-        android:textSize="14sp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/room"
-        app:layout_constraintStart_toEndOf="@+id/room" />
 
     <TextView
         android:id="@+id/timeFrom"
-        android:layout_width="45dp"
-        android:layout_height="wrap_content"
+        android:layout_width="52dp"
+        android:layout_height="33dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="5dp"
         android:textColor="@color/colorWhite"
         android:textSize="14sp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/textView10"
-        app:layout_constraintEnd_toStartOf="@+id/timeTill"
-        app:layout_constraintStart_toEndOf="@+id/room" />
+        app:layout_constraintEnd_toStartOf="@+id/subject"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/timeTill"
-        android:layout_width="45dp"
-        android:layout_height="wrap_content"
+        android:layout_width="52dp"
+        android:layout_height="33dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="5dp"
         android:textColor="@color/colorWhite"
         android:textSize="14sp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/timeFrom"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/subject"
+        app:layout_constraintStart_toStartOf="parent" />
 
-        app:layout_constraintStart_toEndOf="@+id/timeFrom" />
-
-    <Button
+    <!--Button
 
         android:id="@+id/deleteSchedule"
         android:layout_width="70dp"
@@ -111,9 +82,7 @@
         android:longClickable="true"
         android:text="Удалить"
         android:textSize="9sp"
-        app:layout_constraintBottom_toBottomOf="@+id/timeTill"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/timeTill"
-        app:layout_constraintTop_toBottomOf="@+id/timeTill" />
+        tools:layout_editor_absoluteX="237dp"
+        tools:layout_editor_absoluteY="26dp" /-->
 
 </android.support.constraint.ConstraintLayout>

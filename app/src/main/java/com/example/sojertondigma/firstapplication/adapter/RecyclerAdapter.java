@@ -40,11 +40,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             super(itemView);
             layout = itemView;
             subjectTextView = itemView.findViewById(R.id.subject);
-            prepodTextView = itemView.findViewById(R.id.prepod);
+            //prepodTextView = itemView.findViewById(R.id.prepod);
             roomTextView = itemView.findViewById(R.id.room);
             timeFromTextView = itemView.findViewById(R.id.timeFrom);
             timeTillTextView = itemView.findViewById(R.id.timeTill);
-            deleteBtn = itemView.findViewById(R.id.deleteSchedule);
+            //deleteBtn = itemView.findViewById(R.id.deleteSchedule);
         }
     }
 
@@ -86,12 +86,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     public void onBindViewHolder(ViewHolder holder, final int position) {
         final Schedule schedule = mScheduleList.get(position);
         holder.subjectTextView.setText(schedule.getmSubject());
-        holder.prepodTextView.setText(schedule.getmPrepod());
+        //holder.prepodTextView.setText(schedule.getmPrepod());
         holder.roomTextView.setText(schedule.getmRoom());
         holder.timeFromTextView.setText(schedule.getmTimeFrom());
         holder.timeTillTextView.setText(schedule.getmTimeTill());
 
-        holder.deleteBtn.setOnClickListener(new View.OnClickListener() {
+        /*holder.deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
@@ -125,7 +125,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                 });
                 builder.create().show();
             }
-        });
+        });*/
     }
 
 

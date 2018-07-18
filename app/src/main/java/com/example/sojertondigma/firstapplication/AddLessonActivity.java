@@ -31,12 +31,12 @@ public class AddLessonActivity extends AppCompatActivity {
 
         mAddLessonCloseBtn = findViewById(R.id.addLessonCloseBtn);
         mAddLessonCloseBtn.setEnabled(true);
-        /*mAddLessonCloseBtn.setOnClickListener(new View.OnClickListener() {
+        mAddLessonCloseBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBackPressed();
             }
-        });*/
+        });
 
         editTextSubject = findViewById(R.id.editTextSubject);
         editTextPrepod = findViewById(R.id.editTextPrepod);
