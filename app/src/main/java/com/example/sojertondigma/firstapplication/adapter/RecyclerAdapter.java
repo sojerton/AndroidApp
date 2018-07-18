@@ -64,8 +64,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         notifyItemRangeChanged(position, mScheduleList.size());
         notifyDataSetChanged();
 
-        mScheduleList.remove(position);
-        notifyItemRemoved(position);
+        //mScheduleList.remove(position);
+        //notifyItemRemoved(position);
     }
 
     public RecyclerAdapter(List<Schedule> myDataset, Context context, RecyclerView recyclerView) {

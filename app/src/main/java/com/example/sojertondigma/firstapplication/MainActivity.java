@@ -59,8 +59,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        InitRecyclerView();
-
         Log.d(TAG, "MainActivity onCreate");
     }
 
@@ -72,9 +70,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         swipeController = new SwipeController(new SwipeControllerActions() {
             @Override
-            public void onRightClicked(int position) {
+            public void onLeftClicked(int position) {
                 recyclerAdapter.remove(position);
-                recyclerAdapter.notifyItemRemoved(position);
+                //recyclerAdapter.notifyItemRemoved(position);
                 recyclerAdapter.notifyItemRangeChanged(position, recyclerAdapter.getItemCount());
             }
         });
@@ -135,6 +133,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onResume() {
         super.onResume();
+        InitRecyclerView();
         recyclerAdapter.notifyDataSetChanged();
         Log.d(TAG, "MainActivity onResume");
     }
