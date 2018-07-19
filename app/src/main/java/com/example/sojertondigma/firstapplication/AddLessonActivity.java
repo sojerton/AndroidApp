@@ -3,6 +3,7 @@ package com.example.sojertondigma.firstapplication;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -39,6 +40,7 @@ public class AddLessonActivity extends AppCompatActivity {
         });
 
         editTextSubject = findViewById(R.id.editTextSubject);
+        editTextSubject.setMovementMethod(new ScrollingMovementMethod());
         editTextPrepod = findViewById(R.id.editTextPrepod);
         editTextRoom = findViewById(R.id.editTextRoom);
         editTextTimeFrom = findViewById(R.id.editTextTimeFrom);

@@ -52,7 +52,7 @@
         android:inputType="textPersonName"
         android:nextFocusForward="@+id/editTextRoom"
         android:singleLine="true"
-        android:maxLength="20"
+        android:scrollbars="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/editTextRoom"
         app:layout_constraintStart_toStartOf="@+id/editTextSubject"
         app:layout_constraintTop_toBottomOf="@+id/editTextSubject" />
@@ -71,7 +71,7 @@
         android:inputType="textPersonName"
         android:nextFocusForward="@+id/editTextPrepod"
         android:singleLine="true"
-        android:maxLength="20"
+        android:scrollbars="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/editTextPrepod"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
