@@ -53,8 +53,6 @@ public class AddLessonActivity extends AppCompatActivity {
                 saveSchedule();
             }
         });
-
-        Log.d(TAG, "AddLessonActivity onCreate");
     }
 
     public void saveSchedule() {

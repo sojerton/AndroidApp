@@ -1,14 +1,16 @@
 package com.example.sojertondigma.firstapplication.adapter;
 
-import android.app.AlertDialog;
+import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.sojertondigma.firstapplication.DBHelper;
@@ -16,23 +18,26 @@ import com.example.sojertondigma.firstapplication.R;
 import com.example.sojertondigma.firstapplication.Schedule;
 import com.example.sojertondigma.firstapplication.UpdateLessonActivity;
 
+import org.w3c.dom.Text;
+
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
+public class ListAdapter extends BaseAdapter {
 
     private Context mContext;
-    private RecyclerView mRecyclerView;
+    private ListView mListView;
+    protected LayoutInflater inflater;
     private List<Schedule> mScheduleList;
-
-    public class ViewHolder extends RecyclerView.ViewHolder {
+/*
+    public class ViewHolder extends ListView.ViewHolder {
 
         public TextView subjectTextView;
         public TextView prepodTextView;
         public TextView roomTextView;
         public TextView timeFromTextView;
         public TextView timeTillTextView;
-        public Button deleteBtn;
 
         public View layout;
 
@@ -44,10 +49,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             roomTextView = itemView.findViewById(R.id.room);
             timeFromTextView = itemView.findViewById(R.id.timeFrom);
             timeTillTextView = itemView.findViewById(R.id.timeTill);
-            //deleteBtn = itemView.findViewById(R.id.deleteSchedule);
         }
     }
-
+*/
     public void add(Collection<Schedule> schedule) {
         mScheduleList.addAll(schedule);
         notifyDataSetChanged();
@@ -57,31 +61,51 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         final Schedule schedule = mScheduleList.get(position);
         DBHelper dbHelper = new DBHelper(mContext);
         dbHelper.deleteSchedule(schedule.getId(), mContext);
-
         mScheduleList.remove(position);
-        mRecyclerView.removeViewAt(position);
-        notifyItemRemoved(position);
-        notifyItemRangeChanged(position, mScheduleList.size());
-        notifyDataSetChanged();
-
-        //mScheduleList.remove(position);
+        //mListView.removeViewAt(position);
         //notifyItemRemoved(position);
+        //notifyItemRangeChanged(position, mScheduleList.size());
+        notifyDataSetChanged();
     }
 
-    public RecyclerAdapter(List<Schedule> myDataset, Context context, RecyclerView recyclerView) {
-        mScheduleList = myDataset;
-        mContext = context;
-        mRecyclerView = recyclerView;
+    public void update(final int position){
+        final Schedule schedule = mScheduleList.get(position);
+        goToUpdateActivity(schedule.getId());
     }
+
+    public ListAdapter(Context context, List<Schedule> myDataset) {
+        mContext = context;
+        mScheduleList = myDataset;
+        inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    }
+
 
     @Override
-    public RecyclerAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View view = inflater.inflate(R.layout.display_schedule_view, parent, false);
-        ViewHolder vh = new ViewHolder(view);
-        return vh;
-    }
+    public View getView(int position, View convertView, ViewGroup parent) {
+        View v = convertView;
+        if(v == null){
+            v = inflater.inflate(R.layout.display_schedule_view, parent, false);
+        }
+        final Schedule schedule = mScheduleList.get(position);
+        String subject = schedule.getmSubject();
+        //String prepod = schedule.getmPrepod();
+        String room = schedule.getmRoom();
+        String timeFrom = schedule.getmTimeFrom();
+        String timeTill = schedule.getmTimeTill();
 
+        TextView mSubject = v.findViewById(R.id.subject);
+        //TextView mPrepod = v.findViewById(R.id.prepod);
+        TextView mRoom = v.findViewById(R.id.room);
+        TextView mTimeFrom = v.findViewById(R.id.timeFrom);
+        TextView mTimeTill = v.findViewById(R.id.timeTill);
+        mSubject.setText(schedule.getmSubject());
+        //mPrepod.setText(schedule.getmPrepod());
+        mRoom.setText(schedule.getmRoom());
+        mTimeFrom.setText(schedule.getmTimeFrom());
+        mTimeTill.setText(schedule.getmTimeTill());
+        return v;
+    }
+/*
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
         final Schedule schedule = mScheduleList.get(position);
@@ -91,7 +115,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         holder.timeFromTextView.setText(schedule.getmTimeFrom());
         holder.timeTillTextView.setText(schedule.getmTimeTill());
 
-        /*holder.deleteBtn.setOnClickListener(new View.OnClickListener() {
+        holder.deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
@@ -125,9 +149,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                 });
                 builder.create().show();
             }
-        });*/
+        });
     }
-
+*/
 
     private void goToUpdateActivity(long scheduleId) {
         Intent goToUpdate = new Intent(mContext, UpdateLessonActivity.class);
@@ -135,9 +159,18 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         mContext.startActivity(goToUpdate);
     }
 
+    @Override
+    public Schedule getItem(int position){
+        return mScheduleList.get(position);
+    }
 
     @Override
-    public int getItemCount() {
+    public long getItemId(int position){
+        return position;
+    }
+
+    @Override
+    public int getCount(){
         return mScheduleList.size();
     }
 }

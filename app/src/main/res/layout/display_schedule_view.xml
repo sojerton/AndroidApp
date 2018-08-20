@@ -5,10 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="70dp"
     android:background="@drawable/gradient_lesson"
-    android:orientation="horizontal"
-    tools:layout_editor_absoluteX="8dp"
-    tools:layout_editor_absoluteY="33dp"
-    android:layout_margin="6dp">
+    android:orientation="vertical"
+    android:layout_marginLeft="0dp"
+    android:layout_marginRight="0dp">
 
     <TextView
         android:id="@+id/subject"
@@ -66,7 +65,7 @@
         android:layout_marginStart="5dp"
         android:layout_marginTop="5dp"
         android:textColor="@color/colorWhite"
-        android:textSize="20sp"
+        android:textSize="16sp"
         app:layout_constraintEnd_toStartOf="@+id/subject"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -79,7 +78,7 @@
         android:layout_marginStart="5dp"
         android:layout_marginBottom="5dp"
         android:textColor="@color/colorWhite"
-        android:textSize="20sp"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/subject"
         app:layout_constraintStart_toStartOf="parent" />

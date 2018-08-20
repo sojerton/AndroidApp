@@ -2,6 +2,8 @@ package com.example.sojertondigma.firstapplication;
 
 import android.content.Intent;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -12,16 +14,25 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
+import android.util.TypedValue;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.support.v7.widget.Toolbar;
+import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.sojertondigma.firstapplication.adapter.RecyclerAdapter;
-import com.example.sojertondigma.firstapplication.swipe.SwipeController;
+import com.baoyz.swipemenulistview.SwipeMenu;
+import com.baoyz.swipemenulistview.SwipeMenuCreator;
+import com.baoyz.swipemenulistview.SwipeMenuItem;
+import com.baoyz.swipemenulistview.SwipeMenuListView;
+import com.example.sojertondigma.firstapplication.adapter.ListAdapter;
 import com.example.sojertondigma.firstapplication.swipe.SwipeControllerActions;
+
+import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
@@ -29,13 +40,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     final String TAG = "lifecycle";
     Button myBtn;
     private Toolbar toolbar;
-    private RecyclerView recyclerView;
-    private RecyclerView.LayoutManager mLayoutManager;
-    private RecyclerAdapter recyclerAdapter;
+    //private SwipeMenuListView listView;
+    //private ListAdapter listAdapter;
     private DBHelper dbHelper;
     private String filter = "";
     TextView subject, prepod, room, timeFrom, timeTill;
-    SwipeController swipeController = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,38 +68,64 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        Log.d(TAG, "MainActivity onCreate");
+
     }
 
     private void InitRecyclerView() {
-        recyclerView = findViewById(R.id.recycler_view);
-        //recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        populateRecyclerView();
+        //listView.setHasFixedSize(true);
+        //listView.setLayoutManager(new LinearLayoutManager(this));
+        //populateListView();
+  /*      SwipeMenuCreator creator = new SwipeMenuCreator() {
+            @Override
+            public void create(SwipeMenu menu) {
+                SwipeMenuItem openItem = new SwipeMenuItem(
+                        getApplicationContext());
+                openItem.setBackground(new ColorDrawable(Color.rgb(0xC9, 0xC9,
+                        0xCE)));
+                openItem.setWidth(dp2px(90));
+                openItem.setTitle("Update");
+                openItem.setTitleSize(18);
+                openItem.setTitleColor(Color.WHITE);
+                menu.addMenuItem(openItem);
 
-        swipeController = new SwipeController(new SwipeControllerActions() {
+                SwipeMenuItem deleteItem = new SwipeMenuItem(
+                        getApplicationContext());
+                deleteItem.setBackground(new ColorDrawable(Color.rgb(0xF9,
+                        0x3F, 0x25)));
+                deleteItem.setWidth(dp2px(90));
+                deleteItem.setIcon(R.mipmap.ic_delete);
+                menu.addMenuItem(deleteItem);
+            }
+        };
+        listView.setMenuCreator(creator);
+        listView.setOnSwipeListener(new SwipeMenuListView.OnSwipeListener() {
             @Override
-            public void onLeftClicked(int position) {
-                recyclerAdapter.remove(position);
-                //recyclerAdapter.notifyItemRemoved(position);
-                recyclerAdapter.notifyItemRangeChanged(position, recyclerAdapter.getItemCount());
+            public void onSwipeStart(int position) {
+
+            }
+
+            @Override
+            public void onSwipeEnd(int position) {
+
             }
         });
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(swipeController);
-        itemTouchHelper.attachToRecyclerView(recyclerView);
-        recyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
+
+        listView.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
             @Override
-            public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
-                swipeController.onDraw(c);
+            public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
+
+                return false;
             }
         });
+*/
     }
-
-    private void populateRecyclerView() {
+/*
+    private void populateListView() {
         dbHelper = new DBHelper(this);
-        recyclerAdapter = new RecyclerAdapter(dbHelper.scheduleList(), this, recyclerView);
-        recyclerView.setAdapter(recyclerAdapter);
-    }
+        listView = findViewById(R.id.list_view);
+        listAdapter  = new ListAdapter(this, dbHelper.scheduleList());
+        listView.setAdapter(listAdapter);
+    }*/
 
     @Override
     public void onBackPressed() {
@@ -120,42 +155,35 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onRestart() {
         super.onRestart();
-        Log.d(TAG, "MainActivity onRestart");
     }
 
 
     @Override
     protected void onStart() {
         super.onStart();
-        Log.d(TAG, "MainActivity onStart");
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         InitRecyclerView();
-        recyclerAdapter.notifyDataSetChanged();
+        //listAdapter.notifyDataSetChanged();
         Log.d(TAG, "MainActivity onResume");
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        Log.d(TAG, "MainActivity onPause");
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-
-
-        Log.d(TAG, "MainActivity onStop");
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.d(TAG, "MainActivity onDestroy");
     }
 
     @Override
@@ -176,6 +204,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private int dp2px(int dp) {
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp,
+                getResources().getDisplayMetrics());
     }
 
 }
