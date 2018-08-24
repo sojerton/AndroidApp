@@ -1,10 +1,10 @@
 package com.example.sojertondigma.firstapplication.swipe;
 
-import android.app.Activity;
 import android.app.Fragment;
-import android.content.pm.ApplicationInfo;
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
@@ -12,20 +12,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.BounceInterpolator;
-import android.widget.BaseAdapter;
-import android.widget.ImageView;
 
-import com.example.sojertondigma.firstapplication.MainActivity;
-import com.example.sojertondigma.firstapplication.Schedule;
 import com.example.sojertondigma.firstapplication.adapter.ListAdapter;
-
-import android.widget.ListView;
-import android.widget.TextView;
-
 import com.example.sojertondigma.firstapplication.DBHelper;
 import com.example.sojertondigma.firstapplication.R;
-
-import java.util.List;
 
 import swipemenulistview.SwipeMenu;
 import swipemenulistview.SwipeMenuCreator;
@@ -38,6 +28,7 @@ public class SwipeController extends Fragment {
     private ListAdapter listAdapter;
     private SwipeMenuListView listView;
     private DBHelper dbHelper;
+    private View mVeiw;
 
     public SwipeController() {
     }
@@ -45,14 +36,24 @@ public class SwipeController extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.list_fragment, container, false);
+        mVeiw = v;
+        viewInit(mVeiw);
+        return v;
+    }
 
+    @Override
+    public void onResume(){
+        viewInit(mVeiw);
+        super.onResume();
+    }
+
+    public void viewInit(View v){
         dbHelper = new DBHelper(v.getContext());
         listView = v.findViewById(R.id.list_view);
         listAdapter = new ListAdapter(getActivity(), dbHelper.scheduleList());
         listView.setAdapter(listAdapter);
         listView.setOpenInterpolator(new BounceInterpolator());
         listView.setCloseInterpolator(new BounceInterpolator());
-        // step 1. create a MenuCreator
         SwipeMenuCreator creator = new SwipeMenuCreator() {
 
             @Override
@@ -60,18 +61,19 @@ public class SwipeController extends Fragment {
 
                 SwipeMenuItem item1 = new SwipeMenuItem(
                         getActivity().getApplicationContext());
-                item1.setBackground(new ColorDrawable(Color.rgb(0xE5, 0x18,
-                        0x5E)));
+                item1.setBackground(R.color.secondary_text);
                 item1.setWidth(dp2px(90));
-                item1.setIcon(R.mipmap.ic_delete);
+                item1.setTitle("UPDATE");
+                //item1.setBackground(R.drawable.update_background);
+                item1.setTitleColor(Color.BLACK);
+                item1.setTitleSize(15);
                 menu.setStrechMode(SwipeMenu.SwipeStrechMode.SWIPE_STRECH_MODE_BOTH);
                 menu.addLeftMenuItem(item1);
 
                 SwipeMenuItem item2 = new SwipeMenuItem(
                         getActivity().getApplicationContext());
-                item2.setBackground(new ColorDrawable(Color.rgb(0xC9, 0xC9,
-                        0xCE)));
-                item2.setWidth(dp2px(90));
+                item2.setBackground(R.color.colorAccent);
+                item2.setWidth(dp2px(70));
                 item2.setIcon(R.mipmap.ic_delete);
                 menu.setStrechMode(SwipeMenu.SwipeStrechMode.SWIPE_STRECH_MODE_BOTH);
                 menu.addRightMenuItem(item2);
@@ -79,7 +81,6 @@ public class SwipeController extends Fragment {
             }
         };
         listView.setMenuCreator(creator);
-        // step 2. listener item click event
         listView.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(int position, boolean isRightMenu, SwipeMenu menu, SwipeMenuItem menuItem) {
@@ -95,8 +96,6 @@ public class SwipeController extends Fragment {
                 Log.d(SwipeController.this.getClass().getName(), "current Strech item position is = " + position + ", is right menu = " + isRightMenu + ", menu item id is " + menuItem.getId());
             }
         });
-
-        return v;
     }
 
     private int dp2px(int dp) {

@@ -3,11 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="70dp"
+    android:layout_height="wrap_content"
     android:background="@drawable/gradient_lesson"
     android:orientation="vertical"
     android:layout_marginLeft="0dp"
-    android:layout_marginRight="0dp">
+    android:layout_marginRight="0dp"
+    android:layout_margin="10dp">
 
     <TextView
         android:id="@+id/subject"
@@ -68,7 +69,8 @@
         android:textSize="16sp"
         app:layout_constraintEnd_toStartOf="@+id/subject"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/timeTill"/>
 
     <TextView
         android:id="@+id/timeTill"
@@ -81,7 +83,8 @@
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/subject"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/timeFrom"/>
 
     <!--Button
 

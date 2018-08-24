@@ -1,47 +1,26 @@
 package com.example.sojertondigma.firstapplication;
 
 import android.content.Intent;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.util.TypedValue;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.support.v7.widget.Toolbar;
-import android.widget.ListView;
 import android.widget.TextView;
-
-import com.baoyz.swipemenulistview.SwipeMenu;
-import com.baoyz.swipemenulistview.SwipeMenuCreator;
-import com.baoyz.swipemenulistview.SwipeMenuItem;
-import com.baoyz.swipemenulistview.SwipeMenuListView;
-import com.example.sojertondigma.firstapplication.adapter.ListAdapter;
-import com.example.sojertondigma.firstapplication.swipe.SwipeControllerActions;
-
-import java.util.List;
-
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
 
     final String TAG = "lifecycle";
     Button myBtn;
     private Toolbar toolbar;
-    //private SwipeMenuListView listView;
-    //private ListAdapter listAdapter;
     private DBHelper dbHelper;
     private String filter = "";
     TextView subject, prepod, room, timeFrom, timeTill;
