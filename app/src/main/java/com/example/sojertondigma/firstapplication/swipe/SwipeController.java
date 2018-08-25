@@ -13,9 +13,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.BounceInterpolator;
 
+import com.example.sojertondigma.firstapplication.Schedule;
 import com.example.sojertondigma.firstapplication.adapter.ListAdapter;
 import com.example.sojertondigma.firstapplication.DBHelper;
 import com.example.sojertondigma.firstapplication.R;
+
+import java.util.List;
 
 import swipemenulistview.SwipeMenu;
 import swipemenulistview.SwipeMenuCreator;
@@ -29,6 +32,10 @@ public class SwipeController extends Fragment {
     private SwipeMenuListView listView;
     private DBHelper dbHelper;
     private View mVeiw;
+    private ListAdapter mListAdapter;
+    private List<Schedule> mScheduleList;
+    private Context mContext;
+
 
     public SwipeController() {
     }
@@ -52,6 +59,7 @@ public class SwipeController extends Fragment {
         listView = v.findViewById(R.id.list_view);
         listAdapter = new ListAdapter(getActivity(), dbHelper.scheduleList());
         listView.setAdapter(listAdapter);
+        dbHelper.close();
         listView.setOpenInterpolator(new BounceInterpolator());
         listView.setCloseInterpolator(new BounceInterpolator());
         SwipeMenuCreator creator = new SwipeMenuCreator() {
@@ -64,7 +72,7 @@ public class SwipeController extends Fragment {
                 item1.setBackground(R.color.secondary_text);
                 item1.setWidth(dp2px(90));
                 item1.setTitle("UPDATE");
-                //item1.setBackground(R.drawable.update_background);
+                //item1.setText(Html.fromHtml(getString(R.string.note)));
                 item1.setTitleColor(Color.BLACK);
                 item1.setTitleSize(15);
                 menu.setStrechMode(SwipeMenu.SwipeStrechMode.SWIPE_STRECH_MODE_BOTH);
@@ -85,6 +93,10 @@ public class SwipeController extends Fragment {
             @Override
             public boolean onMenuItemClick(int position, boolean isRightMenu, SwipeMenu menu, SwipeMenuItem menuItem) {
                 //ApplicationInfo item = mAppList.get(position);
+                if(isRightMenu){
+                    mListAdapter.remove(position);
+                    mListAdapter.notifyDataSetChanged();
+                }
                 Log.d(SwipeController.this.getClass().getName(), "current click item position is = " + position + ", is right menu = " + isRightMenu + ", menu item id is " + menuItem.getId());
                 return false;
             }

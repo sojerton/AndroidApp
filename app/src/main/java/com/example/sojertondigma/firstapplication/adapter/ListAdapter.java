@@ -62,10 +62,11 @@ public class ListAdapter extends BaseAdapter {
         DBHelper dbHelper = new DBHelper(mContext);
         dbHelper.deleteSchedule(schedule.getId(), mContext);
         mScheduleList.remove(position);
-        //mListView.removeViewAt(position);
+        mListView.removeViewAt(position);
+        dbHelper.close();
         //notifyItemRemoved(position);
         //notifyItemRangeChanged(position, mScheduleList.size());
-        notifyDataSetChanged();
+        //notifyDataSetChanged();
     }
 
     public void update(final int position){
