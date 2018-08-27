@@ -85,15 +85,4 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/timeFrom"/>
 
-    <!--Button
-
-        android:id="@+id/deleteSchedule"
-        android:layout_width="70dp"
-        android:layout_height="39dp"
-        android:longClickable="true"
-        android:text="Удалить"
-        android:textSize="9sp"
-        tools:layout_editor_absoluteX="237dp"
-        tools:layout_editor_absoluteY="26dp" /-->
-
 </android.support.constraint.ConstraintLayout>

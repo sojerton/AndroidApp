@@ -86,7 +86,7 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="44dp"
         android:layout_toEndOf="@+id/addLessonCloseBtn"
-        android:text="Преподаватель"
+        android:text="Преподаватель(ФИО)"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/editTextSubject"
         app:layout_constraintTop_toTopOf="@+id/editTextSubject" />
