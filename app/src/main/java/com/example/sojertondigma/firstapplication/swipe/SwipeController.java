@@ -1,24 +1,17 @@
 package com.example.sojertondigma.firstapplication.swipe;
 
 import android.app.Fragment;
-import android.content.Context;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.BounceInterpolator;
 
-import com.example.sojertondigma.firstapplication.Schedule;
 import com.example.sojertondigma.firstapplication.adapter.ListAdapter;
 import com.example.sojertondigma.firstapplication.DBHelper;
 import com.example.sojertondigma.firstapplication.R;
-
-import java.util.List;
 
 import swipemenulistview.SwipeMenu;
 import swipemenulistview.SwipeMenuCreator;
@@ -32,9 +25,6 @@ public class SwipeController extends Fragment {
     private SwipeMenuListView listView;
     private DBHelper dbHelper;
     private View mVeiw;
-    private ListAdapter mListAdapter;
-    private List<Schedule> mScheduleList;
-    private Context mContext;
 
 
     public SwipeController() {
@@ -73,7 +63,7 @@ public class SwipeController extends Fragment {
                 item1.setWidth(dp2px(90));
                 item1.setTitle("UPDATE");
                 //item1.setText(Html.fromHtml(getString(R.string.note)));
-                item1.setTitleColor(Color.BLACK);
+                item1.setTitleColor(Color.WHITE);
                 item1.setTitleSize(15);
                 menu.setStrechMode(SwipeMenu.SwipeStrechMode.SWIPE_STRECH_MODE_BOTH);
                 menu.addLeftMenuItem(item1);
@@ -91,13 +81,13 @@ public class SwipeController extends Fragment {
         listView.setMenuCreator(creator);
         listView.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
             @Override
-            public boolean onMenuItemClick(int position, boolean isRightMenu, SwipeMenu menu, SwipeMenuItem menuItem) {
-                //ApplicationInfo item = mAppList.get(position);
+            public boolean onMenuItemClick(final int position, boolean isRightMenu, SwipeMenu menu, SwipeMenuItem menuItem) {
                 if(isRightMenu){
-                    mListAdapter.remove(position);
-                    mListAdapter.notifyDataSetChanged();
+                    listAdapter.remove(position);
+                    listAdapter.notifyDataSetChanged();
+                }else{
+                    listAdapter.update(position);
                 }
-                Log.d(SwipeController.this.getClass().getName(), "current click item position is = " + position + ", is right menu = " + isRightMenu + ", menu item id is " + menuItem.getId());
                 return false;
             }
         });
@@ -105,7 +95,12 @@ public class SwipeController extends Fragment {
         listView.setmOnStrechEndCalledListener(new SwipeMenuView.OnStrechEndCalledListener() {
             @Override
             public void onMenuItemStrechEndCalled(int position, boolean isRightMenu, SwipeMenu menu, SwipeMenuItem menuItem) {
-                Log.d(SwipeController.this.getClass().getName(), "current Strech item position is = " + position + ", is right menu = " + isRightMenu + ", menu item id is " + menuItem.getId());
+                if(!isRightMenu){
+                    listAdapter.remove(position);
+                    listAdapter.notifyDataSetChanged();
+                }else{
+                    listAdapter.update(position);
+                }
             }
         });
     }

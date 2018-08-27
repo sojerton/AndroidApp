@@ -77,27 +77,27 @@ public class UpdateLessonActivity extends AppCompatActivity {
 
         if (subject.isEmpty()) {
             Toast.makeText(this, "Необходимо указать предмет", Toast.LENGTH_SHORT).show();
+        } else {
+            if (prepod.isEmpty()) {
+                Toast.makeText(this, "Необходимо указать учителя", Toast.LENGTH_SHORT).show();
+            } else {
+                if (room.isEmpty()) {
+                    Toast.makeText(this, "Необходимо указать кабинет", Toast.LENGTH_SHORT).show();
+                } else {
+                    if (timeFrom.isEmpty()) {
+                        Toast.makeText(this, "Необходимо указать время", Toast.LENGTH_SHORT).show();
+                    } else {
+                        if (timeTill.isEmpty()) {
+                            Toast.makeText(this, "Необходимо указать время", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Schedule updateSchedule = new Schedule(subject, prepod, room, timeFrom, timeTill);
+                            dbHelper.updateSchedule(receivedScheduleId, this, updateSchedule);
+                            goBackHome();
+                        }
+                    }
+                }
+            }
         }
-
-        if (prepod.isEmpty()) {
-            Toast.makeText(this, "Необходимо указать учителя", Toast.LENGTH_SHORT).show();
-        }
-
-        if (room.isEmpty()) {
-            Toast.makeText(this, "Необходимо указать кабинет", Toast.LENGTH_SHORT).show();
-        }
-
-        if (timeFrom.isEmpty()) {
-            Toast.makeText(this, "Необходимо указать время", Toast.LENGTH_SHORT).show();
-        }
-
-        if (timeTill.isEmpty()) {
-            Toast.makeText(this, "Необходимо указать время", Toast.LENGTH_SHORT).show();
-        }
-
-        Schedule updateSchedule = new Schedule(subject, prepod, room, timeFrom, timeTill);
-        dbHelper.updateSchedule(receivedScheduleId, this, updateSchedule);
-        goBackHome();
     }
 
     private void goBackHome() {

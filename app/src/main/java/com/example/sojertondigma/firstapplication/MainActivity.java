@@ -8,7 +8,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,7 +21,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Button myBtn;
     private Toolbar toolbar;
     private DBHelper dbHelper;
-    private String filter = "";
     TextView subject, prepod, room, timeFrom, timeTill;
 
     @Override
@@ -49,62 +47,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     }
-
-    private void InitRecyclerView() {
-        //listView.setHasFixedSize(true);
-        //listView.setLayoutManager(new LinearLayoutManager(this));
-        //populateListView();
-  /*      SwipeMenuCreator creator = new SwipeMenuCreator() {
-            @Override
-            public void create(SwipeMenu menu) {
-                SwipeMenuItem openItem = new SwipeMenuItem(
-                        getApplicationContext());
-                openItem.setBackground(new ColorDrawable(Color.rgb(0xC9, 0xC9,
-                        0xCE)));
-                openItem.setWidth(dp2px(90));
-                openItem.setTitle("Update");
-                openItem.setTitleSize(18);
-                openItem.setTitleColor(Color.WHITE);
-                menu.addMenuItem(openItem);
-
-                SwipeMenuItem deleteItem = new SwipeMenuItem(
-                        getApplicationContext());
-                deleteItem.setBackground(new ColorDrawable(Color.rgb(0xF9,
-                        0x3F, 0x25)));
-                deleteItem.setWidth(dp2px(90));
-                deleteItem.setIcon(R.mipmap.ic_delete);
-                menu.addMenuItem(deleteItem);
-            }
-        };
-        listView.setMenuCreator(creator);
-        listView.setOnSwipeListener(new SwipeMenuListView.OnSwipeListener() {
-            @Override
-            public void onSwipeStart(int position) {
-
-            }
-
-            @Override
-            public void onSwipeEnd(int position) {
-
-            }
-        });
-
-        listView.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
-
-                return false;
-            }
-        });
-*/
-    }
-/*
-    private void populateListView() {
-        dbHelper = new DBHelper(this);
-        listView = findViewById(R.id.list_view);
-        listAdapter  = new ListAdapter(this, dbHelper.scheduleList());
-        listView.setAdapter(listAdapter);
-    }*/
 
     @Override
     public void onBackPressed() {
@@ -145,8 +87,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onResume() {
         super.onResume();
-        InitRecyclerView();
-        //listAdapter.notifyDataSetChanged();
         Log.d(TAG, "MainActivity onResume");
     }
 
@@ -184,11 +124,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
-    private int dp2px(int dp) {
-        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp,
-                getResources().getDisplayMetrics());
-    }
-
 }
 

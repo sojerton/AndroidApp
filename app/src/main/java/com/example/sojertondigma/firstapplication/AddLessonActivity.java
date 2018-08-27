@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -15,7 +14,6 @@ import android.widget.Toast;
 
 public class AddLessonActivity extends AppCompatActivity {
 
-    final String TAG = "lifecycle";
     private ImageButton mAddLessonCloseBtn;
     private Button mAddedBtn;
     private EditText editTextSubject;
@@ -62,29 +60,30 @@ public class AddLessonActivity extends AppCompatActivity {
         String mTimeFrom = editTextTimeFrom.getText().toString().trim();
         String mTimeTill = editTextTimeTill.getText().toString().trim();
         dbHelper = new DBHelper(this);
+
         if (mSubject.isEmpty()) {
             Toast.makeText(this, "Необходимо указать предмет", Toast.LENGTH_SHORT).show();
+        } else {
+            if (mPrepod.isEmpty()) {
+                Toast.makeText(this, "Необходимо указать учителя", Toast.LENGTH_SHORT).show();
+            } else {
+                if (mRoom.isEmpty()) {
+                    Toast.makeText(this, "Необходимо указать кабинет", Toast.LENGTH_SHORT).show();
+                } else {
+                    if (mTimeFrom.isEmpty()) {
+                        Toast.makeText(this, "Необходимо указать время", Toast.LENGTH_SHORT).show();
+                    } else {
+                        if (mTimeTill.isEmpty()) {
+                            Toast.makeText(this, "Необходимо указать время", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Schedule schedule = new Schedule(mSubject, mPrepod, mRoom, mTimeFrom, mTimeTill);
+                            dbHelper.saveNewSchedule(schedule);
+                            goBackHome();
+                        }
+                    }
+                }
+            }
         }
-
-        if (mPrepod.isEmpty()) {
-            Toast.makeText(this, "Необходимо указать учителя", Toast.LENGTH_SHORT).show();
-        }
-
-        if (mRoom.isEmpty()) {
-            Toast.makeText(this, "Необходимо указать кабинет", Toast.LENGTH_SHORT).show();
-        }
-
-        if (mTimeFrom.isEmpty()) {
-            Toast.makeText(this, "Необходимо указать время", Toast.LENGTH_SHORT).show();
-        }
-
-        if (mTimeTill.isEmpty()) {
-            Toast.makeText(this, "Необходимо указать время", Toast.LENGTH_SHORT).show();
-        }
-
-        Schedule schedule = new Schedule(mSubject, mPrepod, mRoom, mTimeFrom, mTimeTill);
-        dbHelper.saveNewSchedule(schedule);
-        goBackHome();
     }
 
     public void goBackHome() {

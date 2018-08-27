@@ -23,7 +23,8 @@
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
             android:name=".UpdateLessonActivity"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
     </application>
 
 </manifest>
